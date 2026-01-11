@@ -1,39 +1,40 @@
-import { Outlet, NavLink } from 'react-router-dom';
+import { Link } from '@tanstack/react-router';
+import { ReactNode } from 'react';
 
-export const MainLayout = () => {
+interface MainLayoutProps {
+  children: ReactNode;
+}
+
+export const MainLayout = ({ children }: MainLayoutProps) => {
   return (
     <div className="min-h-screen flex flex-col">
       <header className="bg-primary text-primary-foreground shadow">
         <nav className="container mx-auto flex gap-4 p-4">
-          <NavLink
+          <Link
             to="/"
-            className={({ isActive }) =>
-              `font-semibold transition hover:opacity-80 ${isActive ? 'underline' : ''}`
-            }
-            end
+            className="font-semibold transition hover:opacity-80"
+            activeProps={{ className: 'underline' }}
           >
             Home
-          </NavLink>
-          <NavLink
+          </Link>
+          <Link
             to="/counter"
-            className={({ isActive }) =>
-              `font-semibold transition hover:opacity-80 ${isActive ? 'underline' : ''}`
-            }
+            className="font-semibold transition hover:opacity-80"
+            activeProps={{ className: 'underline' }}
           >
             Counter
-          </NavLink>        
-          <NavLink
+          </Link>
+          <Link
             to="/wallet-ui"
-            className={({ isActive }) =>
-              `font-semibold transition hover:opacity-80 ${isActive ? 'underline' : ''}`
-            }
+            className="font-semibold transition hover:opacity-80"
+            activeProps={{ className: 'underline' }}
           >
             Wallet UI
-          </NavLink>
+          </Link>
         </nav>
       </header>
       <main className="container mx-auto flex-1 py-6">
-        <Outlet />
+        {children}
       </main>
     </div>
   );

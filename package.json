@@ -1,13 +1,11 @@
 {
-  "name": "@meshsdk/starter-template",
+  "name": "@eddalabs/starter-template",
   "version": "0.1.0",
   "private": true,
   "type": "module",
   "workspaces": [
     "counter-cli",
     "counter-contract",
-    "bulletin-board",
-    "bulletin-board-cli",
     "frontend-vite-react"
   ],
   "scripts": {

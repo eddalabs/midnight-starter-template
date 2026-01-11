@@ -11,7 +11,7 @@ import {
   type DeployedCounterContract,
 } from './common-types';
 import { type Config, contractConfig } from './config';
-import { Counter, type CounterPrivateState, witnesses } from '@meshsdk/counter-contract';
+import { Counter, type CounterPrivateState, witnesses } from '@eddalabs/counter-contract';
 
 import { type ContractAddress } from '@midnight-ntwrk/compact-runtime';
 import * as ledger from '@midnight-ntwrk/ledger-v6';

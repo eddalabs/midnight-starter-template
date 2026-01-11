@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from '@tanstack/react-router';
 import { Wallet, PlusCircle } from 'lucide-react';
 import { ModeToggle } from '@/components/mode-toggle';
 
@@ -43,9 +43,9 @@ export function Home() {
                 </div>
                 <h2 className="text-2xl font-semibold text-foreground mb-2">{item.title}</h2>
                 <p className="text-muted-foreground mb-6 flex-grow">{item.description}</p>
-                <button 
+                <button
                   className="w-full px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors duration-200 flex items-center justify-center gap-2"
-                  onClick={() => navigate(item.path)}
+                  onClick={() => navigate({ to: item.path })}
                 >
                   <span>Open {item.title.split(' ')[0]}</span>
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
