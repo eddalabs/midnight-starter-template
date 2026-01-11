@@ -63,26 +63,6 @@ export function Home() {
           <div className="flex flex-col items-center justify-center space-y-1">
             <p className="text-xs text-muted-foreground tracking-wider mb-3">POWERED BY</p>
             <div className="flex items-center justify-center gap-5">
-              <a 
-                href="https://meshjs.dev" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="flex items-center h-7 hover:opacity-80 transition-opacity"
-                aria-label="Visit Mesh website"
-              >
-                <img 
-                  src="/meshlogo-with-title-white.svg" 
-                  alt="Mesh" 
-                  className="h-7 dark:block hidden object-contain"
-                  style={{ width: 'auto' }}
-                />
-                <img 
-                  src="/meshlogo-with-title-black.svg" 
-                  alt="Mesh" 
-                  className="h-7 dark:hidden block object-contain"
-                  style={{ width: 'auto' }}
-                />
-              </a>
               <div className="text-lg font-light text-muted-foreground opacity-50">×</div>
               <a 
                 href="https://eddalabs.io" 
