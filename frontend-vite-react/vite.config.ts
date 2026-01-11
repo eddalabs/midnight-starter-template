@@ -6,6 +6,7 @@ import wasm from 'vite-plugin-wasm';
 import topLevelAwait from 'vite-plugin-top-level-await';
 import tailwindcss from "@tailwindcss/vite"
 import { nodePolyfills } from 'vite-plugin-node-polyfills';
+import { TanStackRouterVite } from '@tanstack/router-plugin/vite';
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => ({
@@ -15,6 +16,7 @@ export default defineConfig(({ mode }) => ({
     global: 'globalThis',
   },
   plugins: [
+    TanStackRouterVite(),
     nodePolyfills({
       // To add only specific polyfills, add them here.
       // If no specific polyfills are needed, you can leave this empty.

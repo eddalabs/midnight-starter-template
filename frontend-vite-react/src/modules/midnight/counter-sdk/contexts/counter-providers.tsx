@@ -30,7 +30,7 @@ import {
   proofClient,
 } from "../../wallet-widget/utils/providersWrappers/proofClient";
 import { inMemoryPrivateStateProvider } from "../../wallet-widget/utils/customImplementations/in-memory-private-state-provider";
-import { CounterPrivateState } from "@meshsdk/counter-contract";
+import { CounterPrivateState } from "@eddalabs/counter-contract";
 import {
   fromHex,
   ShieldedCoinInfo,

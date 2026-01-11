@@ -1,4 +1,4 @@
-import { type CounterPrivateState, Counter, createPrivateState } from '@meshsdk/counter-contract';
+import { type CounterPrivateState, Counter, createPrivateState } from '@eddalabs/counter-contract';
 import type { ImpureCircuitId, MidnightProviders } from '@midnight-ntwrk/midnight-js-types';
 import type { DeployedContract, FoundContract } from '@midnight-ntwrk/midnight-js-contracts';
 
