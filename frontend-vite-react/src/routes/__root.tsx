@@ -10,7 +10,8 @@ export const logger = pino.pino({
 });
 
 // Update this with your deployed contract address
-const contractAddress = import.meta.env.VITE_CONTRACT_ADDRESS!;
+// const contractAddress = import.meta.env.VITE_CONTRACT_ADDRESS!;
+const contractAddress = "8654596456a92010c20c1e239ba79e3ec2cfdaef1b1aaaeb7660a66fbced8003";
 
 export const Route = createRootRoute({
   component: RootComponent,
