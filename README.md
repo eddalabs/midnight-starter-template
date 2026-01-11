@@ -1,4 +1,4 @@
-# 🚀 MESH - EDDA - Midnight Starter Template
+# 🚀 EDDA - Midnight Starter Template
 - A starter template for building on Midnight Network with React frontend and smart contract integration.
 - **[Live Demo → counter.nebula.builders](https://counter.nebula.builders)**
 
@@ -89,4 +89,4 @@ compact check  # Should show latest version
    ```
 ---
 
-<div align="center"><p>Built with ❤️ by <a href="https://meshjs.dev">Mesh</a> × <a href="https://eddalabs.io">Edda Labs</a></p></div>
+<div align="center"><p>Built with ❤️ by <a href="https://eddalabs.io">Edda Labs</a></p></div>
