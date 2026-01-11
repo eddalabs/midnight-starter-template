@@ -1,5 +1,24 @@
 # Vercel Deployment Guide
 
+## ⚠️ CRITICAL: Enable Git LFS in Vercel
+
+This project uses **Git LFS (Large File Storage)** for contract keys and ZKIR files. You MUST enable Git LFS in your Vercel project settings:
+
+### Steps to Enable Git LFS:
+
+1. Go to **[Vercel Dashboard](https://vercel.com/dashboard)**
+2. Select your project
+3. Go to **Settings → Git**
+4. Scroll down and find **"Git LFS"** option
+5. **Enable the toggle** for Git LFS
+6. Click **Save**
+7. **Redeploy** your project
+
+**Without Git LFS enabled**, Vercel will only download LFS pointer files (small text files) instead of the actual binary contract keys, causing this error:
+```
+Error: expected header tag 'midnight:verifier-key[v4]:', got 'version�https:��git-lfs�gi'
+```
+
 ## Overview
 
 This project requires a specific build process to ensure the Midnight contract verifier keys are properly generated and copied before deploying the frontend.
@@ -40,16 +59,29 @@ Make sure these environment variables are set in your Vercel project:
 
 - `VITE_CONTRACT_ADDRESS` - Your deployed contract address
 
+## How to Verify Git LFS is Working
+
+After enabling Git LFS and redeploying, check your Vercel build logs. You should see:
+
+```bash
+git lfs pull
+# Should show:
+Downloading LFS objects: 100% (4/4), 279 KB | 0 B/s, done.
+```
+
+If you see this, Git LFS is working correctly and your contract keys are being pulled.
+
 ## Troubleshooting
 
 ### Error: "operations are undefined or have mismatched verifier keys"
 
-This error occurs when the verifier keys are not properly loaded. Common causes:
+This error occurs when the verifier keys are not properly loaded. Common causes (in order of likelihood):
 
-1. **Build command incorrect**: Ensure Vercel is using the `build-production` command (check `vercel.json`)
-2. **Keys not copied**: The `copy-contract-keys` script must run before `vite build`
-3. **Keys not committed**: The keys in `counter-contract/src/managed/counter/keys/` must be committed to git
-4. **Contract address mismatch**: Ensure `VITE_CONTRACT_ADDRESS` matches your deployed contract
+1. **Git LFS not enabled** ⚠️ MOST COMMON: Vercel's Git LFS option is not enabled (see Critical section above)
+2. **Build command incorrect**: Ensure Vercel is using the `build-production` command (check `vercel.json`)
+3. **Keys not copied**: The `copy-contract-keys` script must run before `vite build`
+4. **Keys not committed**: The keys in `counter-contract/src/managed/counter/keys/` must be committed to git
+5. **Contract address mismatch**: Ensure `VITE_CONTRACT_ADDRESS` matches your deployed contract
 
 ### Verify Keys Are Present
 
