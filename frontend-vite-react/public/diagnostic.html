@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Midnight Contract Keys Diagnostic</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #00ff00;
+        }
+        h1 {
+            color: #00ff00;
+            border-bottom: 2px solid #00ff00;
+            padding-bottom: 10px;
+        }
+        .section {
+            margin: 20px 0;
+            padding: 15px;
+            background: #0a0a0a;
+            border: 1px solid #333;
+            border-radius: 5px;
+        }
+        .file-check {
+            margin: 10px 0;
+            padding: 10px;
+            background: #000;
+        }
+        .success {
+            color: #00ff00;
+        }
+        .error {
+            color: #ff0000;
+        }
+        .warning {
+            color: #ffaa00;
+        }
+        button {
+            background: #00ff00;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #00cc00;
+        }
+        .details {
+            font-size: 12px;
+            margin-top: 5px;
+            color: #888;
+        }
+        pre {
+            background: #000;
+            padding: 10px;
+            overflow-x: auto;
+            border: 1px solid #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 Midnight Contract Keys Diagnostic Tool</h1>
+
+    <div class="section">
+        <h2>Environment Info</h2>
+        <div id="envInfo">Loading...</div>
+    </div>
+
+    <div class="section">
+        <h2>File Accessibility Check</h2>
+        <button onclick="checkFiles()">Run Diagnostics</button>
+        <button onclick="location.reload()">Refresh Page</button>
+        <div id="fileChecks" style="margin-top: 20px;"></div>
+    </div>
+
+    <div class="section">
+        <h2>File Content Verification</h2>
+        <div id="contentChecks"></div>
+    </div>
+
+    <script>
+        // Display environment info
+        document.getElementById('envInfo').innerHTML = `
+            <div><strong>Origin:</strong> ${window.location.origin}</div>
+            <div><strong>Base Path:</strong> ${window.location.origin}/midnight/counter</div>
+            <div><strong>User Agent:</strong> ${navigator.userAgent}</div>
+            <div><strong>Timestamp:</strong> ${new Date().toISOString()}</div>
+        `;
+
+        const filesToCheck = [
+            { path: '/midnight/counter/keys/increment.prover', type: 'Prover Key', expectedSize: 278053 },
+            { path: '/midnight/counter/keys/increment.verifier', type: 'Verifier Key', expectedSize: 1291 },
+            { path: '/midnight/counter/zkir/increment.zkir', type: 'ZKIR', expectedSize: 784 },
+            { path: '/midnight/counter/zkir/increment.bzkir', type: 'Binary ZKIR', expectedSize: 64 }
+        ];
+
+        async function checkFiles() {
+            const checksDiv = document.getElementById('fileChecks');
+            const contentDiv = document.getElementById('contentChecks');
+            checksDiv.innerHTML = '<div>Running checks...</div>';
+            contentDiv.innerHTML = '';
+
+            let allPassed = true;
+
+            for (const file of filesToCheck) {
+                const result = await checkFile(file);
+                checksDiv.innerHTML += result.html;
+
+                if (!result.success) {
+                    allPassed = false;
+                }
+
+                if (result.success && result.content) {
+                    contentDiv.innerHTML += `
+                        <div class="file-check">
+                            <strong>${file.type}:</strong>
+                            <span class="success">✓ Content looks valid</span>
+                            <div class="details">First 100 bytes (hex): ${result.content}</div>
+                        </div>
+                    `;
+                }
+            }
+
+            if (allPassed) {
+                checksDiv.innerHTML += `
+                    <div class="file-check success">
+                        <h3>✓ ALL CHECKS PASSED!</h3>
+                        <p>All contract keys are accessible and appear to be valid.</p>
+                        <p>If you're still seeing errors, the issue may be:</p>
+                        <ul>
+                            <li>A mismatch between the contract address and deployed contract</li>
+                            <li>A version mismatch in the compact runtime</li>
+                            <li>Browser caching (try hard refresh: Ctrl+Shift+R or Cmd+Shift+R)</li>
+                        </ul>
+                    </div>
+                `;
+            } else {
+                checksDiv.innerHTML += `
+                    <div class="file-check error">
+                        <h3>✗ SOME CHECKS FAILED</h3>
+                        <p>Some files are not accessible. This is likely causing your contract errors.</p>
+                        <p>Check your Vercel build logs to ensure:</p>
+                        <ul>
+                            <li>The build-production command ran successfully</li>
+                            <li>The contract keys were copied to the dist directory</li>
+                            <li>The files are included in the deployment</li>
+                        </ul>
+                    </div>
+                `;
+            }
+        }
+
+        async function checkFile(file) {
+            try {
+                const url = `${window.location.origin}${file.path}`;
+                const response = await fetch(url, { cache: 'no-store' });
+
+                if (!response.ok) {
+                    return {
+                        success: false,
+                        html: `
+                            <div class="file-check error">
+                                <strong>${file.type}</strong> (${file.path})<br>
+                                Status: <span class="error">✗ ${response.status} ${response.statusText}</span>
+                                <div class="details">URL: ${url}</div>
+                            </div>
+                        `
+                    };
+                }
+
+                const blob = await response.blob();
+                const actualSize = blob.size;
+                const sizeMatch = actualSize === file.expectedSize;
+
+                // Read first 100 bytes
+                const arrayBuffer = await blob.slice(0, 100).arrayBuffer();
+                const bytes = new Uint8Array(arrayBuffer);
+                const hexString = Array.from(bytes)
+                    .map(b => b.toString(16).padStart(2, '0'))
+                    .join(' ');
+
+                // Check if it starts with "midnight:" for key files
+                const textDecoder = new TextDecoder();
+                const firstBytes = textDecoder.decode(bytes.slice(0, 20));
+                const validHeader = file.path.includes('keys') ?
+                    firstBytes.startsWith('midnight:') : true;
+
+                return {
+                    success: sizeMatch && validHeader,
+                    content: hexString,
+                    html: `
+                        <div class="file-check ${sizeMatch && validHeader ? 'success' : 'warning'}">
+                            <strong>${file.type}</strong> (${file.path})<br>
+                            Status: <span class="${response.ok ? 'success' : 'error'}">
+                                ${response.ok ? '✓' : '✗'} ${response.status} ${response.statusText}
+                            </span><br>
+                            Size: <span class="${sizeMatch ? 'success' : 'warning'}">
+                                ${actualSize} bytes ${sizeMatch ? '✓' : `(expected ${file.expectedSize})`}
+                            </span><br>
+                            ${file.path.includes('keys') ?
+                                `Header: <span class="${validHeader ? 'success' : 'error'}">
+                                    ${validHeader ? '✓ Valid' : '✗ Invalid'} (${firstBytes.replace(/\0/g, '.')})
+                                </span><br>` : ''}
+                            <div class="details">
+                                Content-Type: ${response.headers.get('content-type') || 'not set'}<br>
+                                Cache-Control: ${response.headers.get('cache-control') || 'not set'}<br>
+                                URL: ${url}
+                            </div>
+                        </div>
+                    `
+                };
+            } catch (error) {
+                return {
+                    success: false,
+                    html: `
+                        <div class="file-check error">
+                            <strong>${file.type}</strong> (${file.path})<br>
+                            Status: <span class="error">✗ FETCH FAILED</span><br>
+                            Error: ${error.message}
+                            <div class="details">This usually means the file doesn't exist or there's a network issue.</div>
+                        </div>
+                    `
+                };
+            }
+        }
+
+        // Auto-run on load
+        window.addEventListener('load', () => {
+            setTimeout(checkFiles, 500);
+        });
+    </script>
+</body>
+</html>
