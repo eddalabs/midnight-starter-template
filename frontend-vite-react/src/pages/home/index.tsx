@@ -62,8 +62,7 @@ export function Home() {
           
           <div className="flex flex-col items-center justify-center space-y-1">
             <p className="text-xs text-muted-foreground tracking-wider mb-3">POWERED BY</p>
-            <div className="flex items-center justify-center gap-5">
-              <div className="text-lg font-light text-muted-foreground opacity-50">×</div>
+            <div className="flex items-center justify-center gap-5">              
               <a 
                 href="https://eddalabs.io" 
                 target="_blank" 
