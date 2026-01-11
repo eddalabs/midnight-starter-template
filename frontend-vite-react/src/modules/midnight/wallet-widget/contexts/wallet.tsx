@@ -174,11 +174,37 @@ export const useWalletStore = (logger?: Logger): WalletContext => {
 
   useEffect(() => {
     const { rdns, networkID } = MidnightBrowserWallet.getMidnightWalletConnected();
-    
-    if (rdns && networkID) {     
-      connectWallet(rdns, networkID);
+
+    if (rdns && networkID) {
+      const autoConnect = async () => {
+        setConnectingWallet(true);
+
+        try {
+          const midnightBrowserWalletInstance =
+            await MidnightBrowserWallet.connectToWallet(rdns, networkID, logger);
+          setInitialAPI(midnightBrowserWalletInstance.initialAPI);
+          setConnectedAPI(midnightBrowserWalletInstance.connectedAPI);
+          setError(undefined);
+          setServiceUriConfig(midnightBrowserWalletInstance.serviceUriConfig);
+          setStatus(midnightBrowserWalletInstance.status);
+          setDustAddress(midnightBrowserWalletInstance.dustAddress);
+          setDustBalance(midnightBrowserWalletInstance.dustBalance);
+          setShieldedAddresses(midnightBrowserWalletInstance.shieldedAddresses);
+          setShieldedBalances(midnightBrowserWalletInstance.shieldedBalances);
+          setUnshieldedAddress(midnightBrowserWalletInstance.unshieldedAddress);
+          setUnshieldedBalances(midnightBrowserWalletInstance.unshieldedBalances);
+          setProofServerOnline(midnightBrowserWalletInstance.proofServerOnline);
+          setMidnightBrowserWalletInstance(midnightBrowserWalletInstance);
+        } catch (error) {
+          setError(error);
+        }
+        setConnectingWallet(false);
+      };
+
+      void autoConnect();
     }
-  }, [connectWallet]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return {
     connectingWallet,

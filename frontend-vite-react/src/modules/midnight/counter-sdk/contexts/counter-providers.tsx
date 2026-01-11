@@ -57,33 +57,29 @@ export const ProvidersContext = createContext<ProvidersState | undefined>(
   undefined
 );
 
+const ACTION_MESSAGES: Readonly<ActionMessages> = {
+  proveTxStarted: "Proving transaction...",
+  proveTxDone: undefined,
+  balanceTxStarted: "Signing the transaction with Midnight Lace wallet...",
+  balanceTxDone: undefined,
+  downloadProverStarted: "Downloading prover key...",
+  downloadProverDone: undefined,
+  submitTxStarted: "Submitting transaction...",
+  submitTxDone: undefined,
+  watchForTxDataStarted: "Waiting for transaction finalization on blockchain...",
+  watchForTxDataDone: undefined,
+} as const;
+
 export const Provider = ({ children, logger }: ProviderProps) => {
   const [flowMessage, setFlowMessage] = useState<string | undefined>(undefined);
 
   const { serviceUriConfig, shieldedAddresses, connectedAPI, status } = useWallet();
 
-  const actionMessages = useMemo<ActionMessages>(
-    () => ({
-      proveTxStarted: "Proving transaction...",
-      proveTxDone: undefined,
-      balanceTxStarted: "Signing the transaction with Midnight Lace wallet...",
-      balanceTxDone: undefined,
-      downloadProverStarted: "Downloading prover key...",
-      downloadProverDone: undefined,
-      submitTxStarted: "Submitting transaction...",
-      submitTxDone: undefined,
-      watchForTxDataStarted:
-        "Waiting for transaction finalization on blockchain...",
-      watchForTxDataDone: undefined,
-    }),
-    []
-  );
-
   const providerCallback = useCallback(
     (action: ProviderAction): void => {
-      setFlowMessage(actionMessages[action]);
+      setFlowMessage(ACTION_MESSAGES[action]);
     },
-    [actionMessages]
+    []
   );
 
   const privateStateProvider: PrivateStateProvider<
