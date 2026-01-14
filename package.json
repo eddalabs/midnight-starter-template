@@ -50,6 +50,7 @@
     "@midnight-ntwrk/midnight-js-types": "3.0.0-alpha.11",
     "@midnight-ntwrk/midnight-js-utils": "3.0.0-alpha.11",
     "@midnight-ntwrk/wallet-sdk-abstractions": "1.0.0-beta.9",
+    "@midnight-ntwrk/wallet-sdk-runtime": "1.0.0-beta.10",
     "@midnight-ntwrk/wallet-sdk-address-format": "3.0.0-beta.9",
     "@midnight-ntwrk/wallet-sdk-dust-wallet": "1.0.0-beta.11",
     "@midnight-ntwrk/wallet-sdk-facade": "1.0.0-beta.12",
