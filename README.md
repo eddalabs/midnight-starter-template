@@ -11,6 +11,11 @@
 - [Lace](https://chromewebstore.google.com/detail/hgeekaiplokcnmakghbdfbgnlfheichg?utm_source=item-share-cb) (Browser wallet extension)
 - [Faucet](https://faucet.preview.midnight.network/) (Preview Network Faucet)
 
+## Known Issues
+
+- There’s a not-yet-fixed bug in the arm64 Docker image of the proof server.
+- Workaround: Use Bricktower proof server. **bricktowers/proof-server:6.1.0-alpha.6**
+
 ## 🛠️ Setup
 
 ### 1️⃣ Install Git LFS
