@@ -60,5 +60,6 @@ jspm_packages/
 # Turbo
 .turbo
 
-
+# Frontend build artifacts (copied from contract source during build)
+frontend-vite-react/public/midnight/
 
