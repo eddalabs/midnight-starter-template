@@ -67,6 +67,9 @@
   },
   "overrides": {
     "@midnight-ntwrk/compact-runtime": "0.11.0-rc.1",
-    "@midnight-ntwrk/onchain-runtime-v1": "1.0.0-alpha.5"
+    "@midnight-ntwrk/onchain-runtime-v1": "1.0.0-alpha.5",
+    "@eddalabs/counter-contract": {
+      "@midnight-ntwrk/compact-runtime": "0.14.0"
+    }
   }
 }
