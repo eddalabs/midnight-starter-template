@@ -1,6 +1,7 @@
 import { Counter, type CounterPrivateState } from '@eddalabs/counter-contract';
-import type { ImpureCircuitId, MidnightProviders } from '@midnight-ntwrk/midnight-js-types';
+import type { MidnightProviders } from '@midnight-ntwrk/midnight-js-types';
 import type { DeployedContract, FoundContract } from '@midnight-ntwrk/midnight-js-contracts';
+import type { ImpureCircuitId } from '@midnight-ntwrk/compact-js';
 
 export type CounterCircuits = ImpureCircuitId<Counter.Contract<CounterPrivateState>>;
 
