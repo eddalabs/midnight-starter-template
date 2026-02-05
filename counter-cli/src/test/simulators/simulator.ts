@@ -1,4 +1,4 @@
-import { type Config, UndeployedConfig, currentDir, PreviewConfig } from '../../config';
+import { type Config, UndeployedConfig, currentDir, PreviewConfig, PreprodConfig } from '../../config';
 import {
   DockerComposeEnvironment,
   GenericContainer,
@@ -9,8 +9,6 @@ import {
 import path from 'path';
 import * as api from '../../api';
 import type { WalletContext } from '../../api';
-import * as Rx from 'rxjs';
-import * as ledger from '@midnight-ntwrk/ledger-v6';
 import type { Logger } from 'pino';
 
 const GENESIS_MINT_WALLET_SEED = '0000000000000000000000000000000000000000000000000000000000000001';
@@ -74,6 +72,11 @@ export function parseArgs(required: string[]): TestConfiguration {
       case 'preview':
         cfg = new PreviewConfig();
         psMode = 'preview';
+        cacheFileName = `${seed.substring(0, 7)}-${psMode}.state`;
+        break;
+        case 'preprod':
+        cfg = new PreprodConfig();
+        psMode = 'preprod';
         cacheFileName = `${seed.substring(0, 7)}-${psMode}.state`;
         break;
       default:
@@ -154,9 +157,9 @@ export class TestEnvironment {
   };
 
   static getProofServerContainer = async (env: string) =>
-    await new GenericContainer('midnightnetwork/proof-server:6.1.0-alpha.6')
+    await new GenericContainer('midnightntwrk/proof-server:7.0.0')
       .withExposedPorts(6300)
-      .withCommand(['midnight-proof-server', '--network', env])
+      .withCommand(['midnight-proof-server -v'])
       .withEnvironment({ RUST_BACKTRACE: 'full' })
       .withWaitStrategy(Wait.forLogMessage('Actix runtime found; starting in Actix runtime', 1))
       .start();
@@ -178,15 +181,14 @@ export class TestEnvironment {
   getWallet = async (): Promise<WalletContext> => {
     this.logger.info('Setting up wallet');
 
-    // Use hex seed for standalone (genesis wallet), mnemonic for preview
-    if (this.testConfig.dappConfig.networkId === "undeployed") {
-      this.walletContext = await api.buildWalletFromHexSeed(this.testConfig.dappConfig, this.testConfig.seed);
+    // Use hex seed for standalone (genesis wallet), mnemonic for preview/preprod
+    if (this.testConfig.psMode === 'undeployed') {
+      this.walletContext = await api.buildWalletAndWaitForFunds(this.testConfig.dappConfig, this.testConfig.seed);
     } else {
-      this.walletContext = await api.buildWalletAndWaitForFunds(this.testConfig.dappConfig, this.testConfig.mnemonic);
+      const seed = await api.mnemonicToSeed(this.testConfig.mnemonic);
+      this.walletContext = await api.buildWalletAndWaitForFunds(this.testConfig.dappConfig, seed);
     }
-    
-    const state = await Rx.firstValueFrom(this.walletContext.wallet.state());
-    const balance = state.unshielded?.balances[ledger.nativeToken().raw] ?? 0n;   
+
     return this.walletContext;
   };
 }

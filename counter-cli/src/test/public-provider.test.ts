@@ -8,7 +8,7 @@ import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 import 'dotenv/config';
 import * as Rx from 'rxjs';
 import { TestEnvironment } from './simulators/simulator';
-import { Counter } from '@meshsdk/counter-contract';
+import { Counter } from '@eddalabs/counter-contract';
 
 const logDir = path.resolve(currentDir, '..', 'logs', 'public-provider', `${new Date().toISOString()}.log`);
 const logger = await createLogger(logDir);

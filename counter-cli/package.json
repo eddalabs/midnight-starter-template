@@ -18,6 +18,7 @@
   "scripts": {      
     "test-undeployed": "vitest run counter.test.ts",  
     "test-preview": "RUN_ENV_TESTS=true TEST_ENV=preview vitest run counter.test.ts",
+    "test-preprod": "RUN_ENV_TESTS=true TEST_ENV=preprod vitest run counter.test.ts",
     "tui-undeployed": "node --experimental-specifier-resolution=node --loader ts-node/esm src/tui_standalone.ts",     
     "tui-preview": "node --experimental-specifier-resolution=node --loader ts-node/esm src/tui_preview.ts", 
     "tui-preprod": "node --experimental-specifier-resolution=node --loader ts-node/esm src/tui_preprod.ts", 
