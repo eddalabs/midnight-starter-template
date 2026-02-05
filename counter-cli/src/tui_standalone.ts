@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { createLogger } from './logger.js';
 import path from 'node:path';
 import { run } from './cli.js';

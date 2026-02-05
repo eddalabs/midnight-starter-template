@@ -20,7 +20,7 @@ import { levelPrivateStateProvider } from '@midnight-ntwrk/midnight-js-level-pri
 import { NodeZkConfigProvider } from '@midnight-ntwrk/midnight-js-node-zk-config-provider';
 import { deployContract, findDeployedContract } from '@midnight-ntwrk/midnight-js-contracts';
 import { assertIsContractAddress, toHex } from '@midnight-ntwrk/midnight-js-utils';
-import { getNetworkId, setNetworkId } from '@midnight-ntwrk/midnight-js-network-id';
+import { getNetworkId } from '@midnight-ntwrk/midnight-js-network-id';
 import {
   type FinalizedTxData,
   type MidnightProvider,
@@ -197,18 +197,7 @@ export const createWalletAndMidnightProvider = async (
   walletContext: WalletContext,
 ): Promise<WalletProvider & MidnightProvider> => {
   const state = await Rx.firstValueFrom(walletContext.wallet.state().pipe(Rx.filter((s) => s.isSynced)));
-  logger.info({
-    section: 'DUST Wallet State',
-    dust: state.dust,
-  });
-  logger.info({
-    section: 'Shielded Wallet State',
-    shielded: state.shielded,
-  });
-  logger.info({
-    section: 'Unshielded Wallet State',
-    unshielded: state.unshielded,
-  });
+
   return {
     getCoinPublicKey(): ledger.CoinPublicKey {
       return state.shielded.coinPublicKey.toHexString();
@@ -520,9 +509,6 @@ export const buildFreshWallet = async (config: Config): Promise<WalletContext> =
   await buildWalletAndWaitForFunds(config, toHex(Buffer.from(generateRandomSeed())));
 
 export const configureProviders = async (walletContext: WalletContext, config: Config) => {
-  // Set global network ID - required before contract deployment
-  setNetworkId(config.networkId);
-
   const walletAndMidnightProvider = await createWalletAndMidnightProvider(walletContext);
   const zkConfigProvider = new NodeZkConfigProvider<CounterCircuits>(contractConfig.zkConfigPath);
   return {

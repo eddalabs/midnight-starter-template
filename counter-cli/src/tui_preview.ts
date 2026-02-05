@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { createLogger } from './logger.js';
 import { run } from './cli.js';
 import { currentDir, PreviewConfig } from './config.js';
