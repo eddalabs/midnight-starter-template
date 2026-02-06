@@ -1,8 +1,8 @@
-import * as ledger from "@midnight-ntwrk/ledger-v6";
+import * as ledger from "@midnight-ntwrk/ledger-v7";
 import {
   type MidnightProvider,
   type WalletProvider,
-  type BalancedProvingRecipe,
+  type UnboundTransaction,
   PrivateStateProvider,
   ZKConfigProvider,
   ProofProvider,
@@ -33,14 +33,13 @@ import { inMemoryPrivateStateProvider } from "../../wallet-widget/utils/customIm
 import { CounterPrivateState } from "@eddalabs/counter-contract";
 import {
   fromHex,
-  ShieldedCoinInfo,
   toHex,
 } from "@midnight-ntwrk/compact-runtime";
 
 export interface ProvidersState {
   privateStateProvider: PrivateStateProvider<typeof CounterPrivateStateId>;
   zkConfigProvider?: ZKConfigProvider<CounterCircuits>;
-  proofProvider: ProofProvider<CounterCircuits>;
+  proofProvider: ProofProvider;
   publicDataProvider?: PublicDataProvider;
   walletProvider?: WalletProvider;
   midnightProvider?: MidnightProvider;
@@ -125,10 +124,10 @@ export const Provider = ({ children, logger }: ProviderProps) => {
 
   const proofProvider = useMemo(
     () =>
-      serviceUriConfig?.proverServerUri
-        ? proofClient(serviceUriConfig.proverServerUri, providerCallback)
+      serviceUriConfig?.proverServerUri && zkConfigProvider
+        ? proofClient(serviceUriConfig.proverServerUri, zkConfigProvider, providerCallback)
         : noopProofClient(),
-    [serviceUriConfig, providerCallback, status]
+    [serviceUriConfig, zkConfigProvider, providerCallback, status]
   );
 
   const walletProvider: WalletProvider = useMemo(
@@ -142,36 +141,27 @@ export const Provider = ({ children, logger }: ProviderProps) => {
               return shieldedAddresses?.shieldedEncryptionPublicKey as unknown as ledger.EncPublicKey;
             },
             async balanceTx(
-              tx: ledger.UnprovenTransaction,
-              newCoins?: ShieldedCoinInfo[],
+              tx: UnboundTransaction,
               ttl?: Date
-            ): Promise<BalancedProvingRecipe> {
+            ): Promise<ledger.FinalizedTransaction> {
               try {
                 logger.info(
-                  { tx, newCoins, ttl },
+                  { tx, ttl },
                   "Balancing transaction via wallet"
                 );
                 const serializedTx = toHex(tx.serialize());
                 const received =
                   await connectedAPI.balanceUnsealedTransaction(serializedTx);
-                const transaction: ledger.Transaction<
+                return ledger.Transaction.deserialize<
                   ledger.SignatureEnabled,
-                  ledger.PreProof,
-                  ledger.PreBinding
-                > = ledger.Transaction.deserialize<
-                  ledger.SignatureEnabled,
-                  ledger.PreProof,
-                  ledger.PreBinding
+                  ledger.Proof,
+                  ledger.Binding
                 >(
                   "signature",
-                  "pre-proof",
-                  "pre-binding",
+                  "proof",
+                  "binding",
                   fromHex(received.tx)
                 );
-                return {
-                  type: "TransactionToProve",
-                  transaction: transaction,
-                };
               } catch (e) {
                 logger.error(
                   { error: e },

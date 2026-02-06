@@ -2,11 +2,15 @@ import { type Logger } from 'pino';
 import { type ContractAddress } from '@midnight-ntwrk/compact-runtime';
 import * as Rx from 'rxjs';
 import { CounterContract, CounterPrivateStateId, CounterProviders, DeployedCounterContract, emptyState, UserAction, type DerivedState } from './common-types';
-import { Counter, CounterPrivateState, createPrivateState, witnesses } from '@eddalabs/counter-contract';
+import { Counter, CounterPrivateState, createPrivateState } from '@eddalabs/counter-contract';
 import { deployContract, findDeployedContract } from '@midnight-ntwrk/midnight-js-contracts';
 import { PrivateStateProvider } from '@midnight-ntwrk/midnight-js-types';
+import { CompiledContract } from '@midnight-ntwrk/compact-js';
 
-export const counterContractInstance: CounterContract = new Counter.Contract(witnesses);
+const counterCompiledContract = CompiledContract.make('counter', Counter.Contract).pipe(
+  CompiledContract.withVacantWitnesses,
+  CompiledContract.withCompiledFileAssets(`${window.location.origin}/midnight/counter`),
+);
 
 export interface ContractControllerInterface {
   readonly deployedContractAddress: ContractAddress;   
@@ -103,9 +107,9 @@ export class ContractController implements ContractControllerInterface {
       },
     });    
     const deployedContract = await deployContract(providers, {
+      compiledContract: counterCompiledContract,
       privateStateId: contractPrivateStateId,
-      contract: counterContractInstance,
-      initialPrivateState: await ContractController.getPrivateState(contractPrivateStateId, providers.privateStateProvider),      
+      initialPrivateState: await ContractController.getPrivateState(contractPrivateStateId, providers.privateStateProvider),
     });
 
     logger.trace({
@@ -135,7 +139,7 @@ export class ContractController implements ContractControllerInterface {
 
     const deployedContract = await findDeployedContract(providers, {
       contractAddress,
-      contract: counterContractInstance,
+      compiledContract: counterCompiledContract,
       privateStateId: contractPrivateStateId,
       initialPrivateState: await ContractController.getPrivateState(contractPrivateStateId, providers.privateStateProvider),
     });
