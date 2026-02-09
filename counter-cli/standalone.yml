@@ -1,8 +1,8 @@
 services:
   proof-server:
     container_name: 'counter-proof-server'
-    image: "midnightnetwork/proof-server:6.1.0-alpha.6"
-    command: ["midnight-proof-server", "--network", "undeployed"]
+    image: "midnightntwrk/proof-server:7.0.0"
+    command: ["midnight-proof-server -v"]
     ports:
       - "6300:6300"
     environment:
@@ -15,7 +15,7 @@ services:
       start_period: 10s
   indexer:
     container_name: 'counter-indexer'
-    image: 'midnightntwrk/indexer-standalone:3.0.0-alpha.19'
+    image: 'midnightntwrk/indexer-standalone:3.0.0'
     ports:
       - '8088:8088'
     environment:
@@ -36,7 +36,7 @@ services:
       node:
         condition: service_started
   node:
-    image: 'midnightntwrk/midnight-node:0.18.0-rc.9'
+    image: 'midnightntwrk/midnight-node:0.20.0'
     container_name: 'counter-node'
     ports:
       - "9944:9944"

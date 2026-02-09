@@ -1,11 +1,11 @@
 import 'dotenv/config';
 import { createLogger } from './logger.js';
 import { run } from './cli.js';
-import { currentDir, PreviewConfig } from './config.js';
+import { currentDir, PreprodConfig } from './config.js';
 import { DockerComposeEnvironment, Wait } from 'testcontainers';
 import path from 'node:path';
 
-const config = new PreviewConfig();
+const config = new PreprodConfig();
 const dockerEnv = new DockerComposeEnvironment(
   path.resolve(currentDir, '..'),
   'proof-server.yml',

@@ -1,15 +1,16 @@
 import path from 'path';
 import * as api from '../api';
 import { type CounterProviders } from '../common-types';
-import { Config, currentDir } from '../config';
+import { type Config, currentDir } from '../config';
+import { getNetworkId } from '@midnight-ntwrk/midnight-js-network-id';
 import { createLogger } from '../logger';
 
 import { describe, it, expect, beforeAll, afterAll, beforeEach } from 'vitest';
 import 'dotenv/config';
 import * as Rx from 'rxjs';
 import { TestEnvironment } from './simulators/simulator';
-import { Counter } from '@meshsdk/counter-contract';
-import * as ledger from '@midnight-ntwrk/ledger-v6';
+import { Counter } from '@eddalabs/counter-contract';
+import * as ledger from '@midnight-ntwrk/ledger-v7';
 import { ShieldedAddress, UnshieldedAddress } from '@midnight-ntwrk/wallet-sdk-address-format';
 import { tokenValue } from './utils/utils';
 import { CombinedTokenTransfer } from '@midnight-ntwrk/wallet-sdk-facade';
@@ -51,7 +52,7 @@ describe('API', () => {
     const state = await Rx.firstValueFrom(wallet.wallet.state().pipe(Rx.filter((s) => s.isSynced)));
     const stateReceiverAddress = state.shielded.address;
     const ledgerReceiverAddress = ShieldedAddress.codec
-      .encode(configuration.networkId, stateReceiverAddress)
+      .encode(getNetworkId(), stateReceiverAddress)
       .asString();
     // stateAddress: "coinPublicKey" & "encryptionPublicKey" - Bytes
     logger.info({
@@ -65,9 +66,7 @@ describe('API', () => {
     });
 
     const ttl = new Date(Date.now() + 60 * 60 * 1000);
-    const transfer = await wallet.wallet.transferTransaction(
-      wallet.shieldedSecretKeys,
-      wallet.dustSecretKey,
+    const recipe = await wallet.wallet.transferTransaction(
       [
         {
           type: 'shielded',
@@ -80,11 +79,12 @@ describe('API', () => {
           ],
         },
       ],
-      ttl,
+      { shieldedSecretKeys: wallet.shieldedSecretKeys, dustSecretKey: wallet.dustSecretKey },
+      { ttl },
     );
 
     //proof transaction
-    const finalizedTx = await wallet.wallet.finalizeTransaction(transfer);
+    const finalizedTx = await wallet.wallet.finalizeRecipe(recipe);
     const submittedTxHash = await wallet.wallet.submitTransaction(finalizedTx);
     logger.info({
       section: 'Submitted Transaction Hash',
@@ -102,7 +102,7 @@ describe('API', () => {
     const state = await Rx.firstValueFrom(wallet.wallet.state().pipe(Rx.filter((s) => s.isSynced)));
     const stateReceiverAddress = state.unshielded.address;
     const ledgerReceiverAddress = UnshieldedAddress.codec
-      .encode(configuration.networkId, stateReceiverAddress)
+      .encode(getNetworkId(), stateReceiverAddress)
       .asString();
     // stateAddress: "coinPublicKey" & "encryptionPublicKey" - Bytes
     logger.info({
@@ -130,21 +130,16 @@ describe('API', () => {
 
     const ttl = new Date(Date.now() + 30 * 60 * 1000);
     const recipe = await wallet.wallet.transferTransaction(
-      wallet.shieldedSecretKeys,
-      wallet.dustSecretKey,
       tokenTransfer,
-      ttl,
+      { shieldedSecretKeys: wallet.shieldedSecretKeys, dustSecretKey: wallet.dustSecretKey },
+      { ttl },
     );
 
-    const signedTx = await wallet.wallet.signTransaction(recipe.transaction, (payload) =>
+    const signedRecipe = await wallet.wallet.signRecipe(recipe, (payload) =>
       wallet.unshieldedKeystore.signData(payload),
     );
 
-    const finalizedTx = await wallet.wallet.finalizeTransaction({
-      ...recipe,
-      transaction: signedTx,
-    });
-
+    const finalizedTx = await wallet.wallet.finalizeRecipe(signedRecipe);
     const submittedTxHash = await wallet.wallet.submitTransaction(finalizedTx);
     logger.info({
       section: 'Submitted Transaction Hash',
@@ -174,21 +169,17 @@ describe('API', () => {
 
     const outputOffer = ledger.ZswapOffer.fromOutput(output, transfer.type, transfer.amount);
 
-    const arbitraryTx = ledger.Transaction.fromParts(configuration.networkId, outputOffer);
+    const arbitraryTx = ledger.Transaction.fromParts(getNetworkId(), outputOffer);
 
-    const provenArbitraryTx = await wallet.wallet.finalizeTransaction({
-      type: 'TransactionToProve',
-      transaction: arbitraryTx,
-    });
+    const provenArbitraryTx = await wallet.wallet.finalizeTransaction(arbitraryTx);
 
-    const balancedTx = await wallet.wallet.balanceTransaction(
-      wallet.shieldedSecretKeys,
-      wallet.dustSecretKey,
+    const balancedRecipe = await wallet.wallet.balanceFinalizedTransaction(
       provenArbitraryTx,
-      new Date(Date.now() + 30 * 60 * 1000),
+      { shieldedSecretKeys: wallet.shieldedSecretKeys, dustSecretKey: wallet.dustSecretKey },
+      { ttl: new Date(Date.now() + 30 * 60 * 1000) },
     );
 
-    const finalizedTx = await wallet.wallet.finalizeTransaction(balancedTx);
+    const finalizedTx = await wallet.wallet.finalizeRecipe(balancedRecipe);
     const submittedTxHash = await wallet.wallet.submitTransaction(finalizedTx);
     logger.info({
       section: 'Submitted Transaction Hash',
@@ -214,28 +205,19 @@ describe('API', () => {
     const intent = ledger.Intent.new(new Date(Date.now() + 30 * 60 * 1000));
     intent.guaranteedUnshieldedOffer = ledger.UnshieldedOffer.new([], outputs, []);
 
-    const arbitraryTx = ledger.Transaction.fromParts(configuration.networkId, undefined, undefined, intent);
+    const arbitraryTx = ledger.Transaction.fromParts(getNetworkId(), undefined, undefined, intent);
 
-    const recipe = await wallet.wallet.balanceTransaction(
-      wallet.shieldedSecretKeys,
-      wallet.dustSecretKey,
+    const recipe = await wallet.wallet.balanceUnprovenTransaction(
       arbitraryTx,
-      new Date(Date.now() + 30 * 60 * 1000),
+      { shieldedSecretKeys: wallet.shieldedSecretKeys, dustSecretKey: wallet.dustSecretKey },
+      { ttl: new Date(Date.now() + 30 * 60 * 1000) },
     );
 
-    if (recipe.type !== 'TransactionToProve') {
-      throw new Error('Expected a transaction to prove');
-    }
-
-    const signedTx = await wallet.wallet.signTransaction(recipe.transaction, (payload) =>
+    const signedRecipe = await wallet.wallet.signRecipe(recipe, (payload) =>
       wallet.unshieldedKeystore.signData(payload),
     );
 
-    const finalizedTx = await wallet.wallet.finalizeTransaction({
-      ...recipe,
-      transaction: signedTx,
-    });
-
+    const finalizedTx = await wallet.wallet.finalizeRecipe(signedRecipe);
     const submittedTxHash = await wallet.wallet.submitTransaction(finalizedTx);
     logger.info({
       section: 'Submitted Transaction Hash',
