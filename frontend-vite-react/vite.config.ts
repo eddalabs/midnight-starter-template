@@ -46,7 +46,9 @@ export default defineConfig(({ mode }) => ({
       },
     },
     exclude: [
-      "@midnight-ntwrk/onchain-runtime"
+      "@midnight-ntwrk/onchain-runtime-v2",
+      "@midnight-ntwrk/ledger-v7",
+      "@midnight-ntwrk/compact-runtime",
     ],
   },
   build: {
