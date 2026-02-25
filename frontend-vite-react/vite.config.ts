@@ -5,14 +5,26 @@ import { viteCommonjs } from '@originjs/vite-plugin-commonjs';
 import wasm from 'vite-plugin-wasm';
 import tailwindcss from "@tailwindcss/vite"
 import { TanStackRouterVite } from '@tanstack/router-plugin/vite';
+import { nodePolyfills } from 'vite-plugin-node-polyfills';
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => ({
   define: {
+    'process.env.NODE_ENV': JSON.stringify(mode === 'production' ? 'production' : 'development'),
+    'process.env': {},
     global: 'globalThis',
   },
   plugins: [
     TanStackRouterVite(),
+       nodePolyfills({
+      // To add only specific polyfills, add them here.
+      // If no specific polyfills are needed, you can leave this empty.
+      include: ['buffer', 'process'],
+      globals: {
+        Buffer: true,
+        process: true,
+      },
+    }),
     wasm(),
     react(),
     viteCommonjs(),
@@ -21,11 +33,6 @@ export default defineConfig(({ mode }) => ({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
-      process: 'process/browser',
-      buffer: 'buffer',
-      util: 'util',
-      crypto: 'crypto-browserify',
-      stream: 'stream-browserify',
     },
   },
   optimizeDeps: {
