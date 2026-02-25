@@ -34,9 +34,8 @@ curl --proto '=https' --tlsv1.2 -LsSf \
   https://github.com/midnightntwrk/compact/releases/latest/download/compact-installer.sh | sh
 ```
 ```bash
-# Install the latest compiler
-# Compact compiler version 0.27 should be downloaded manually. Compact tools does not support it currently. 
-compact update +0.27.0
+# Install the latest compiler 
+compact update +0.28.0
 ```
 
 ### 3️⃣ Install Node.js and docker
