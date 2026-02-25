@@ -77,6 +77,20 @@ export class MidnightBrowserWallet {
     return wallets;
   }
 
+  private static findWalletByNameOrRdns(identifier: string): InitialAPI | undefined {
+    if (!window.midnight) return undefined;
+    // First try direct key lookup (legacy support)
+    if (window.midnight[identifier]) return window.midnight[identifier];
+    // Scan by name or rdns (API v4+)
+    for (const key in window.midnight) {
+      const wallet = window.midnight[key];
+      if (wallet?.name === identifier || wallet?.rdns === identifier) {
+        return wallet;
+      }
+    }
+    return undefined;
+  }
+
   static getMidnightWalletConnected(): { rdns: string | null; networkID: string | null } {
     const rdns = window.localStorage.getItem("rdns-connected");
     const networkID = window.localStorage.getItem("network-id");
@@ -107,7 +121,7 @@ export class MidnightBrowserWallet {
     return firstValueFrom(
       fnPipe(
         interval(100),
-        map(() => window.midnight?.[rdns]),
+        map(() => MidnightBrowserWallet.findWalletByNameOrRdns(rdns)),
         tap((initialAPI) => {
           logger?.info(initialAPI, "Check for wallet initial API");
         }),
