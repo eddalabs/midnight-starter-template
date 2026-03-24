@@ -209,6 +209,7 @@ All sessions are available in English, Spanish, and Portuguese.
      → https://www.youtube.com/@eddalabs/playlists
 
   💻 GitHub repositories:
+     → https://github.com/eddalabs/midnight-starter-template/tree/main/educational-material
      → https://github.com/eddalabs/midnight-starter-template
      → https://github.com/eddalabs/midnight-contracts
 

@@ -29,6 +29,7 @@ For the full content strategy and planning details, see the [Content Plan](conte
 |----------|------|
 | Edda Labs YouTube | [youtube.com/@eddalabs](https://www.youtube.com/@eddalabs) |
 | Session Playlists | [Playlists](https://www.youtube.com/@eddalabs/playlists) |
+| Educational Material | [Education](https://github.com/eddalabs/midnight-starter-template/tree/main/educational-material) |
 | Starter Template repo | [eddalabs/midnight-starter-template](https://github.com/eddalabs/midnight-starter-template) |
 | Contracts repo | [eddalabs/midnight-contracts](https://github.com/eddalabs/midnight-contracts) |
 

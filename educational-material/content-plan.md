@@ -23,8 +23,9 @@ Given the rapidly evolving nature of the Midnight ecosystem and Cardano's develo
 3. **Community-Driven Topics**: We actively incorporate community feedback and questions into our content planning.
 
 ### Reference repositories
-- [Starter Template](https://github.com/eddalabs/midnight-starter-template).
-- [Contracts](https://github.com/eddalabs/midnight-contracts).
+- [Educational Material](https://github.com/eddalabs/midnight-starter-template/tree/main/educational-material)
+- [Starter Template](https://github.com/eddalabs/midnight-starter-template)
+- [Contracts](https://github.com/eddalabs/midnight-contracts)
 
 ### Youtube Sessions
 - Edda Labs Youtube Channel: [https://www.youtube.com/@eddalabs](https://www.youtube.com/@eddalabs).
