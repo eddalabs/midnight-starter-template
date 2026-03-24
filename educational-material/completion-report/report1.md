@@ -30,6 +30,32 @@ Through this content, we've successfully onboarded new developers and companies 
 The Edda Labs team has collaborated closely with the Midnight Foundation team.
 
 
+📋 Milestone Outputs, Acceptance Criteria & Evidence
+
+A. Output: Comprehensive project plan and content calendar outlining topics and objectives.
+
+Acceptance Criteria: Develop a documented project plan and content calendar. Erick Romero and Tainá Bugs lead the production process, leveraging developer expertise, multilingual capabilities, and practical experience from hackathons and Cardano/Midnight initiatives.
+
+Evidence:
+  → https://github.com/eddalabs/midnight-starter-template/tree/main/educational-material
+
+B. Output: Production workflows and team roles defined and operational.
+
+Acceptance Criteria: Tools in our workflow include VS Code for code editing, OBS for screen capturing, Premiere Pro for video editing, along with a camera and microphone. Production workflows and team roles are defined and operational.
+
+Evidence:
+  → https://github.com/eddalabs/midnight-starter-template/tree/main/educational-material
+
+C. Output: First 12+ hours of content produced and published as high-quality tutorial videos delivered in English, Spanish, and Portuguese.
+
+Acceptance Criteria: 12 high-quality tutorial videos delivered in English, Spanish, and Portuguese. Quality ensured through practical demonstrations, real-world use cases, and multilingual accessibility, supporting web2 developers in transitioning to full-stack Cardano and Midnight developers.
+
+Evidence:
+  → https://www.youtube.com/@eddalabs
+  → https://www.youtube.com/@eddalabs/playlists
+  → Video links provided in the Video Catalog section below
+
+
 ✅ Milestone Summary
 
 We have completed Milestone 1 by producing and publishing over 12+ hours of content in each language: English, Spanish, and Portuguese, delivering developer-focused tutorials that support onboarding and ecosystem growth.

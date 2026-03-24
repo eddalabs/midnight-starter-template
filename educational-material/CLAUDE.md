@@ -25,6 +25,39 @@ The POA section is pasted into an external platform that accepts plain text. For
 - No markdown formatting (no `**bold**`, no `[links](url)`, no `#` headers)
 - Keep it scannable — short paragraphs, clear spacing between sections
 
+### Lettered Outputs Section (📋)
+
+After the introductory narrative and before the Milestone Summary, include a lettered outputs section that maps each declared milestone output to its acceptance criteria and evidence. Use the format:
+
+```
+📋 Milestone Outputs, Acceptance Criteria & Evidence
+
+A. Output: [What was delivered as Output A]
+
+Acceptance Criteria: [Completion criteria for Output A]
+
+Evidence:
+  → [Link(s) to verify Output A]
+
+B. Output: [What was delivered as Output B]
+...
+```
+
+The number of lettered items (A, B, C, etc.) must match the number of distinct outputs declared in the Milestone Outputs section of Part 1. Each item should reference specific links as evidence.
+
+### Typical POA Sections (in order)
+
+1. Introductory narrative (context and impact)
+2. Lettered Outputs, Acceptance Criteria & Evidence (📋)
+3. Milestone Summary (✅)
+4. Content Breakdown (📊)
+5. Content Plan & Project Management (📹) — if applicable
+6. Supplementary Resources (📦) — if applicable
+7. Video Catalog (📺)
+8. Evidence of Completion (📎)
+9. Ecosystem Alignment (🤝)
+10. Next Steps (📍)
+
 ## File Naming
 
 Reports go in `educational-material/completion-report/` with the naming pattern `report{N}.md`.
