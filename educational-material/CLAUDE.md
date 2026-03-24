@@ -25,17 +25,6 @@ The POA section is pasted into an external platform that accepts plain text. For
 - No markdown formatting (no `**bold**`, no `[links](url)`, no `#` headers)
 - Keep it scannable — short paragraphs, clear spacing between sections
 
-### Typical POA Sections
-
-1. Comments to Milestone Reviewers (📝)
-2. Summary narrative (context and impact)
-3. Milestone Summary (✅)
-4. Content Breakdown (📊)
-5. Content Plan & Project Management (📹)
-6. Evidence of Completion (📎)
-7. Ecosystem Alignment (🤝)
-8. Next Steps (📍)
-
 ## File Naming
 
 Reports go in `educational-material/completion-report/` with the naming pattern `report{N}.md`.

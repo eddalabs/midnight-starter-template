@@ -2,7 +2,7 @@
 
 ## 📺 Video Walkthroughs – Building the code
 #### Description: 
-This guide covers the essential steps to get started with the Midnight examples from the MeshJS GitHub repository. It begins with setting up your environment using WSL and Docker, followed by configuring the Lace Wallet for blockchain interactions. You'll also be guided through setting up Visual Studio Code (VsCode), running the Proof Server, and using the compiler. Additional topics include installing the VsCode Extension, installing the example projects, and building them for execution. Each step is aimed at ensuring a smooth installation and usage experience for developers exploring the Midnight framework.
+This guide covers the essential steps to get started with the Midnight examples from the GitHub repository. It begins with setting up your environment using WSL and Docker, followed by configuring the Lace Wallet for blockchain interactions. You'll also be guided through setting up Visual Studio Code (VsCode), running the Proof Server, and using the compiler. Additional topics include installing the VsCode Extension, installing the example projects, and building them for execution. Each step is aimed at ensuring a smooth installation and usage experience for developers exploring the Midnight framework.
 
 #### Duration: 1 hour
 - [Version in English](https://youtu.be/W03Hjqcc5vY)

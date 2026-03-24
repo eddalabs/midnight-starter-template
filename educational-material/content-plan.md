@@ -6,9 +6,9 @@
 All episodes follow this structured format:
 - **Duration**: 1 hour
 - **Segments**:
-  - **Ecosystem** – Analysis of Cardano and Midnight developments: blogs, diaries, academy, hackathons.
-  - **Coding** – Live demos using partner tools libraries
-  - **Q&A** – Answering community and developer questions
+  - **Ecosystem (Explainers)** – Analysis of Cardano and Midnight developments: blogs, diaries, academy, hackathons.
+  - **Coding (Build Session)** – Live demos using partner tools libraries
+  - **Q&A (Deep Dives)** – Answering community and developer questions
 
 ### Thematic Focus Areas
 - Privacy & Zero-Knowledge Proofs (ZKPs)
