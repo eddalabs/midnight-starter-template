@@ -10,9 +10,9 @@ All episodes follow a structured format (~1 hour):
 
 | Segment | Focus |
 |---------|-------|
-| **Ecosystem** | Analysis of Cardano and Midnight developments: blogs, diaries, academy, hackathons |
-| **Coding** | Live demos using partner tools and libraries |
-| **Q&A** | Answering community and developer questions |
+| **Ecosystem (Explainers)** | Analysis of Cardano and Midnight developments: blogs, diaries, academy, hackathons |
+| **Coding (Build Session)** | Live demos using partner tools and libraries |
+| **Q&A (Deep Dives)** | Answering community and developer questions |
 
 ### Thematic Focus Areas
 - Privacy & Zero-Knowledge Proofs (ZKPs)
@@ -29,6 +29,7 @@ For the full content strategy and planning details, see the [Content Plan](conte
 |----------|------|
 | Edda Labs YouTube | [youtube.com/@eddalabs](https://www.youtube.com/@eddalabs) |
 | Session Playlists | [Playlists](https://www.youtube.com/@eddalabs/playlists) |
+| Educational Material | [Education](https://github.com/eddalabs/midnight-starter-template/tree/main/educational-material) |
 | Starter Template repo | [eddalabs/midnight-starter-template](https://github.com/eddalabs/midnight-starter-template) |
 | Contracts repo | [eddalabs/midnight-contracts](https://github.com/eddalabs/midnight-contracts) |
 

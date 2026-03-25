@@ -11,7 +11,7 @@ Erick introduced the midnight session, covering ecosystem updates, technical dee
 
 ## 📺 Midnight Session #2
 #### Description:
-Erick provided updates on the Lace wallet, the Midnight and Outlier Ventures partnership for the "Base Camp" accelerator, and the launch of Midnight Academy tutorials. The meeting also covered an ongoing hackathon, tooling development with Mesh, a technical deep dive into Midnight smart contract structure including types, configurations, architecture with its providers, standalone and remote configurations, and testing. Leif and Atosi engaged in discussions with Erick regarding Midnight's blockchain structure, interoperability, contract deployment, SDK usage, the concept of circuits, private data storage, regulation-friendly aspects, comparison to Monero, and the mainnet release timeline.
+Erick provided updates on the Lace wallet, the Midnight and Outlier Ventures partnership for the "Base Camp" accelerator, and the launch of Midnight Academy tutorials. The meeting also covered an ongoing hackathon, tooling development, a technical deep dive into Midnight smart contract structure including types, configurations, architecture with its providers, standalone and remote configurations, and testing. Leif and Atosi engaged in discussions with Erick regarding Midnight's blockchain structure, interoperability, contract deployment, SDK usage, the concept of circuits, private data storage, regulation-friendly aspects, comparison to Monero, and the mainnet release timeline.
 
 #### Duration: 30min
 - [Version in English](https://youtu.be/A88-OsBgb04)
@@ -119,7 +119,7 @@ In this video, we break down the main types of zero‑knowledge proof systems an
 
 ## 📺 Midnight Session #14
 #### Description:
-The updates cover several key aspects of the Midnight ecosystem. The “Glacier Drop” section explains how ecosystem allocations are structured and provides guidance on wallet compatibility with different address types. The Dev Diaries introduce the new Compact Developer Tools, designed to enhance efficiency for developers. Additionally, a deep dive into the Mesh-Midnight Starter Template offers insights into its features and usage.
+The updates cover several key aspects of the Midnight ecosystem. The “Glacier Drop” section explains how ecosystem allocations are structured and provides guidance on wallet compatibility with different address types. The Dev Diaries introduce the new Compact Developer Tools, designed to enhance efficiency for developers. Additionally, a deep dive into the Midnight Starter Template offers insights into its features and usage.
 
 #### Duration: 1 hour
 - [Version in English](https://youtu.be/lP40FhqZN3k)
@@ -128,7 +128,7 @@ The updates cover several key aspects of the Midnight ecosystem. The “Glacier 
 
 ## 📺 Midnight Session #15
 #### Description:
-This session covers major ecosystem news including Midnight's move toward open-sourcing its repositories and the latest Lace Roadmap updates. We also explore the Mesh Starter Template and its capabilities. In the Code section, we begin Part I of Contract Logic Testing. We wrap up with Q&A discussions on platforms and the Community Board.
+This session covers major ecosystem news including Midnight's move toward open-sourcing its repositories and the latest Lace Roadmap updates. We also explore the Starter Template and its capabilities. In the Code section, we begin Part I of Contract Logic Testing. We wrap up with Q&A discussions on platforms and the Community Board.
 
 #### Duration: 1 hour
 - [Version in English](https://youtu.be/BPt8CeaIx2E)
