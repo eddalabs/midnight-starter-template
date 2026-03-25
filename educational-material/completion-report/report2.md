@@ -175,20 +175,20 @@ Starting with the Preview network era, all sessions include embedded audio track
   This session covers the Midnight Mainnet Trusted Node Operators announcement and the Midnight and Confidential AI for Telegram initiative. In the Code section, we deep dive into Rational Privacy and run a build session on the Bulletin Board contract.
      🔗 https://youtu.be/FuhRtmKDuTo
 
-  📺 Multi-Language Dev Session #08: TITLE PENDING
+  📺 Multi-Language Dev Session #08: OpenZeppelin, Midnight City, Merkle Trees & LunarSwap
   ⏱ Duration: 1 hour | 🌐 English, Spanish, Portuguese (embedded audio)
-  Description Pending.
-     🔗 LINK PENDING
+  This session explores why OpenZeppelin is building for ZK and introduces Midnight City, where AI agents run an entire city on Midnight. In the Code section, we dive into Merkle Trees and Nullifiers for private permissions, and walk through the LunarSwap DEX built with OpenZeppelin's Midnight Contracts.
+     🔗 https://youtu.be/gTwua0oU_XE
 
-  📺 Multi-Language Dev Session #09: TITLE PENDING
+  📺 Multi-Language Dev Session #09: Brick Towers, ZK Identity & RWA Build Session
   ⏱ Duration: 1 hour | 🌐 English, Spanish, Portuguese (embedded audio)
-  Description Pending.
-     🔗 LINK PENDING
+  This session covers ZK Identity for Real World Assets (RWA) and how to prove compliance privately. We explore Private KYC using Zero-Knowledge Identity for RWA Tokens. In the Code section, we walk through the Brick Towers RWA build session combining ZK Identity with tokenization.
+     🔗 https://youtu.be/F8ehVzx4EdI
 
-  📺 Multi-Language Dev Session #10: TITLE PENDING
+  📺 Multi-Language Dev Session #10: Private Marketplace & Building Midnight Escrow Marketplace
   ⏱ Duration: 1 hour | 🌐 English, Spanish, Portuguese (embedded audio)
-  Description Pending.
-     🔗 LINK PENDING
+  This session introduces the Private Marketplace on Midnight with encrypted delivery and explores how Midnight encrypts physical delivery for marketplaces. In the Code section, we do a full contract walkthrough of the Midnight Escrow Marketplace.
+     🔗 https://youtu.be/0ZbJoh2NM0Y
 
 
 📎 Evidence of Completion

@@ -63,28 +63,28 @@ This session covers the Midnight Mainnet Trusted Node Operators announcement and
 - [Version in English, Spanish, and Portuguese](https://youtu.be/FuhRtmKDuTo)
 
 
-## 📺 Multi-Language Dev Session #08: TITLE PENDING
+## 📺 Multi-Language Dev Session #08: OpenZeppelin, Midnight City, Merkle Trees & LunarSwap
 #### Description:
-Description Pending
+This session explores why OpenZeppelin is building for ZK and introduces Midnight City, where AI agents run an entire city on Midnight. In the Code section, we dive into Merkle Trees and Nullifiers for private permissions, and walk through the LunarSwap DEX built with OpenZeppelin's Midnight Contracts.
 
 #### Duration: 1 hour
 - Audio tracks for different languages embedded in the same video
-- [Version in English, Spanish, and Portuguese](LINK PENDING)
+- [Version in English, Spanish, and Portuguese](https://youtu.be/gTwua0oU_XE)
 
 
-## 📺 Multi-Language Dev Session #09: TITLE PENDING
+## 📺 Multi-Language Dev Session #09: Brick Towers, ZK Identity & RWA Build Session
 #### Description:
-Description Pending
+This session covers ZK Identity for Real World Assets (RWA) and how to prove compliance privately. We explore Private KYC using Zero-Knowledge Identity for RWA Tokens. In the Code section, we walk through the Brick Towers RWA build session combining ZK Identity with tokenization.
 
 #### Duration: 1 hour
 - Audio tracks for different languages embedded in the same video
-- [Version in English, Spanish, and Portuguese](LINK PENDING)
+- [Version in English, Spanish, and Portuguese](https://youtu.be/F8ehVzx4EdI)
 
 
-## 📺 Multi-Language Dev Session #10: TITLE PENDING
+## 📺 Multi-Language Dev Session #10: Private Marketplace & Building Midnight Escrow Marketplace
 #### Description:
-Description Pending
+This session introduces the Private Marketplace on Midnight with encrypted delivery and explores how Midnight encrypts physical delivery for marketplaces. In the Code section, we do a full contract walkthrough of the Midnight Escrow Marketplace.
 
 #### Duration: 1 hour
 - Audio tracks for different languages embedded in the same video
-- [Version in English, Spanish, and Portuguese](LINK PENDING)
+- [Version in English, Spanish, and Portuguese](https://youtu.be/0ZbJoh2NM0Y)
