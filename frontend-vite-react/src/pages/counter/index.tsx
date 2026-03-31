@@ -1,6 +1,6 @@
 import { Loading } from "@/components/loading";
 import { useEffect, useState } from "react";
-import { RefreshCw, PlusCircle, Hash, Activity, Lock, MapPin } from "lucide-react";
+import { RefreshCw, PlusCircle, Hash, Activity, Lock, MapPin, Copy, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { useContractSubscription } from "@/modules/midnight/counter-sdk/hooks/use-contract-subscription";
@@ -12,6 +12,7 @@ export const Counter = () => {
     undefined
   );
   const [appLoading, setAppLoading] = useState(true);
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     if (derivedState?.round !== undefined) {
@@ -21,7 +22,20 @@ export const Counter = () => {
 
   const deployNew = async () => {
     const { address } = await onDeploy();
+    if (address) {
+      console.log('=== CONTRACT DEPLOYED ===');
+      console.log('Contract Address:', address);
+      console.log('========================');
+    }
     setDeployedAddress(address);
+  };
+
+  const copyAddress = async () => {
+    if (deployedAddress) {
+      await navigator.clipboard.writeText(deployedAddress);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
   };
 
   const increment = async () => {
@@ -96,8 +110,19 @@ export const Counter = () => {
 
             {deployedAddress && (
               <div className="mt-4 p-3 bg-muted/50 rounded-lg border border-border/60">
-                <p className="text-xs font-medium text-muted-foreground mb-1">Deployed to</p>
-                <p className="text-xs font-mono break-all text-foreground">{deployedAddress}</p>
+                <div className="flex items-center justify-between mb-1">
+                  <p className="text-xs font-medium text-muted-foreground">Deployed to</p>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-6 px-2 text-xs gap-1"
+                    onClick={copyAddress}
+                  >
+                    {copied ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
+                    {copied ? 'Copied!' : 'Copy'}
+                  </Button>
+                </div>
+                <p className="text-xs font-mono break-all text-foreground select-all">{deployedAddress}</p>
               </div>
             )}
 

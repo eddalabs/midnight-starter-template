@@ -24,6 +24,7 @@ export const useContractSubscription = () => {
 
   const onDeploy = async (): Promise<ContractFollow> => {
     const contractFollow = await deploy.deployContract();
+    setCounterDeploymentObservable(contractFollow.observable);
     return contractFollow;
   }
 
@@ -74,7 +75,7 @@ export const useContractSubscription = () => {
     }
   }, [deployedContractAPI]);
 
-  return {       
+  return {
     deployedContractAPI,
     derivedState,
     onDeploy,

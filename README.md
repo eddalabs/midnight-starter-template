@@ -95,3 +95,4 @@ compact check  # Should show latest version
 ---
 
 <div align="center"><p>Built with ❤️ by <a href="https://eddalabs.io">Edda Labs</a></p></div>
+

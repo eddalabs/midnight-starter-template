@@ -1,4 +1,4 @@
-import * as ledger from "@midnight-ntwrk/ledger-v7";
+import * as ledger from "@midnight-ntwrk/ledger-v8";
 import {
   type MidnightProvider,
   type WalletProvider,

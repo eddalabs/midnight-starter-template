@@ -20,6 +20,13 @@ export const inMemoryPrivateStateProvider = <
 
   return {
     /**
+     * Sets the current contract address context.
+     * @param {ContractAddress} _contractAddress - The contract address to set.
+     */
+    setContractAddress(_contractAddress: ContractAddress): void {
+      // No-op for in-memory provider; contract address scoping is not needed.
+    },
+    /**
      * Sets the private state for a given key.
      * @param {PSI} key - The key for the private state.
      * @param {PS} state - The private state to set.

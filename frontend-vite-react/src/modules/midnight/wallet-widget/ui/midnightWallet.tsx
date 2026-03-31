@@ -114,25 +114,6 @@ function Footer() {
       <div className="flex gap-1 items-center justify-center">
         <span className="text-accent-foreground">Powered by</span>
         <a
-          href="https://meshjs.dev/"
-          target="_blank"
-          className="flex items-center gap-1 text-accent-foreground hover:text-zinc-500 fill-foreground hover:fill-zinc-500 dark:hover:text-orange-200 dark:hover:fill-zinc-200"
-        >
-          <img
-            src="/meshlogo-with-title-white.svg"
-            alt="Mesh"
-            className="h-4 dark:block hidden object-contain"
-            style={{ width: "auto" }}
-          />
-          <img
-            src="/meshlogo-with-title-black.svg"
-            alt="Mesh"
-            className="h-4 dark:hidden block object-contain"
-            style={{ width: "auto" }}
-          />
-        </a>
-        <span className="mx-1 text-accent-foreground">&</span>
-        <a
           href="https://eddalabs.io/"
           target="_blank"
           className="flex items-center gap-1 text-accent-foreground hover:text-zinc-500 fill-foreground hover:fill-zinc-500 dark:hover:text-orange-200 dark:hover:fill-zinc-200"
