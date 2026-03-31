@@ -1,6 +1,6 @@
 import { CombinedTokenTransfer } from '@midnight-ntwrk/wallet-sdk-facade';
 import * as api from '../../api';
-import * as ledger from '@midnight-ntwrk/ledger-v7';
+import * as ledger from '@midnight-ntwrk/ledger-v8';
 import { tokenValue } from './utils';
 import { MidnightBech32m, UnshieldedAddress } from '@midnight-ntwrk/wallet-sdk-address-format';
 import { getNetworkId } from '@midnight-ntwrk/midnight-js-network-id';
@@ -16,7 +16,7 @@ export async function sendUnshieldedToken(wallet: api.WalletContext, address: st
         {
           type: ledger.unshieldedToken().raw,
           amount: tokenValue(amount),
-          receiverAddress: address,
+          receiverAddress: address as unknown as UnshieldedAddress,
         },
       ],
     },

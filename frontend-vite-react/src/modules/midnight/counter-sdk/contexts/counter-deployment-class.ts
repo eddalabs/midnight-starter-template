@@ -89,6 +89,10 @@ export class DeployedTemplateManager implements DeployedAPIProvider {
         // this.localState.setContractPrivateId(CounterPrivateStateId, api.deployedContractAddress);
         this.localState.addContract(api.deployedContractAddress);
 
+        console.log('=== CONTRACT DEPLOYED ===');
+        console.log('Contract Address:', api.deployedContractAddress);
+        console.log('========================');
+
         deployment.next({
           status: "deployed",
           api,

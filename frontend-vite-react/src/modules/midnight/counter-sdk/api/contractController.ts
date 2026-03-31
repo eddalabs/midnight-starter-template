@@ -112,13 +112,21 @@ export class ContractController implements ContractControllerInterface {
       initialPrivateState: await ContractController.getPrivateState(contractPrivateStateId, providers.privateStateProvider),
     });
 
-    logger.trace({
+    const contractAddress = deployedContract.deployTxData.public.contractAddress;
+
+    logger.info({
       contractDeployed: {
         action: "Contract was deployed",
+        contractAddress,
         contractPrivateStateId,
         finalizedDeployTxData: deployedContract.deployTxData.public,
       },
     });
+
+    console.log('=== CONTRACT DEPLOYED ===');
+    console.log('Contract Address:', contractAddress);
+    console.log('Deploy TX Data:', deployedContract.deployTxData.public);
+    console.log('========================');
 
     return new ContractController(contractPrivateStateId, deployedContract, providers, logger);
   }
