@@ -5,7 +5,7 @@ This project is built on the Midnight Network.
 
 ## 📦 Prerequisites
 
-- [Node.js](https://nodejs.org/) (v23+) & [npm](https://www.npmjs.com/) (v11+)
+- [Node.js](https://nodejs.org/) (v22+) & [npm](https://www.npmjs.com/) (v11+)
 - [Docker](https://docs.docker.com/get-docker/)
 - [Git LFS](https://git-lfs.com/) (for large files)
 - [Compact](https://docs.midnight.network/relnotes/compact-tools) (Midnight developer tools)
@@ -14,8 +14,7 @@ This project is built on the Midnight Network.
 
 ## Known Issues
 
-- There’s a not-yet-fixed bug in the arm64 Docker image of the proof server.
-- Workaround: Use Bricktower proof server. **bricktowers/proof-server:6.1.0-alpha.6**
+- N/A
 
 ## 🛠️ Setup
 
@@ -36,7 +35,7 @@ curl --proto '=https' --tlsv1.2 -LsSf \
 ```
 ```bash
 # Install the latest compiler 
-compact update +0.28.0
+compact update +0.30.0
 ```
 
 ### 3️⃣ Install Node.js and docker
@@ -77,8 +76,9 @@ compact check  # Should show latest version
 
 2. **Create .env file from template under frontend-vite-react folder**
    - [`frontend-vite-react/.env_template`](./frontend-vite-react/.env_template)
+   
 
-### Start Development In Preview Network or
+### Start Development In Preview-Preprod-Mainnet Network or
    ```bash   
    # In one terminal (from project root)
    npm run dev:frontend
