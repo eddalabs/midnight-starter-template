@@ -142,21 +142,22 @@ export const useWalletStore = (logger?: Logger): WalletContext => {
   );
 
   const disconnect = useCallback(() => {
-    MidnightBrowserWallet.deleteMidnightWalletConnected(logger);   
+    MidnightBrowserWallet.deleteMidnightWalletConnected(logger);
     midnightBrowserWalletInstance?.disconnect();
-    setInitialAPI(midnightBrowserWalletInstance?.initialAPI);
-    setConnectedAPI(midnightBrowserWalletInstance?.connectedAPI);
+    setInitialAPI(undefined);
+    setConnectedAPI(undefined);
     setError(undefined);
-    setServiceUriConfig(midnightBrowserWalletInstance?.serviceUriConfig);
-    setStatus(midnightBrowserWalletInstance?.status);
-    setDustAddress(midnightBrowserWalletInstance?.dustAddress);
-    setDustBalance(midnightBrowserWalletInstance?.dustBalance);
-    setShieldedAddresses(midnightBrowserWalletInstance?.shieldedAddresses);
-    setShieldedBalances(midnightBrowserWalletInstance?.shieldedBalances);
-    setUnshieldedAddress(midnightBrowserWalletInstance?.unshieldedAddress);
-    setUnshieldedBalances(midnightBrowserWalletInstance?.unshieldedBalances);
-    setProofServerOnline(midnightBrowserWalletInstance?.proofServerOnline);    
-  }, [logger]);
+    setServiceUriConfig(undefined);
+    setStatus(undefined);
+    setDustAddress(undefined);
+    setDustBalance(undefined);
+    setShieldedAddresses(undefined);
+    setShieldedBalances(undefined);
+    setUnshieldedAddress(undefined);
+    setUnshieldedBalances(undefined);
+    setProofServerOnline(undefined);
+    setMidnightBrowserWalletInstance(undefined);
+  }, [midnightBrowserWalletInstance, logger]);
 
   const refresh = useCallback(() => {
     if (midnightBrowserWalletInstance === undefined) return;
@@ -170,7 +171,7 @@ export const useWalletStore = (logger?: Logger): WalletContext => {
     setUnshieldedAddress(midnightBrowserWalletInstance.unshieldedAddress);
     setUnshieldedBalances(midnightBrowserWalletInstance.unshieldedBalances);
     setProofServerOnline(midnightBrowserWalletInstance.proofServerOnline);
-  }, [logger]);
+  }, [midnightBrowserWalletInstance]);
 
   useEffect(() => {
     const { rdns, networkID } = MidnightBrowserWallet.getMidnightWalletConnected();
