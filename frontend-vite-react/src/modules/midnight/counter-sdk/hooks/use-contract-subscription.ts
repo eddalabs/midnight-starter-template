@@ -1,6 +1,6 @@
 
 import { DerivedState } from "../api/common-types";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { ContractControllerInterface } from "../api/contractController";
 import { Observable } from "rxjs";
 import { useWallet } from "../../wallet-widget/hooks/useWallet";
@@ -9,7 +9,7 @@ import { useDeployedContracts } from "./use-deployment";
 import { useProviders } from "./use-providers";
 
 export const useContractSubscription = () => {
-  const { status } = useWallet();
+  const { connectedAPI } = useWallet();
   const providers = useProviders();
   const deploy = useDeployedContracts();
 
@@ -21,6 +21,7 @@ export const useContractSubscription = () => {
   const [deployedContractAPI, setDeployedContractAPI] =
     useState<ContractControllerInterface>();
   const [derivedState, setDerivedState] = useState<DerivedState>();
+  const joinedWithRef = useRef<unknown>(null);
 
   const onDeploy = async (): Promise<ContractFollow> => {
     const contractFollow = await deploy.deployContract();
@@ -33,10 +34,23 @@ export const useContractSubscription = () => {
   }, [deploy, setCounterDeploymentObservable]);
 
   useEffect(() => {
-    if (status?.status === "connected" && providers) {
+    if (connectedAPI && providers) {
+      if (joinedWithRef.current !== connectedAPI) {
+        setDeployedContractAPI(undefined);
+        setDerivedState(undefined);
+        setContractDeployment(undefined);
+        setCounterDeploymentObservable(undefined);
+        joinedWithRef.current = connectedAPI;
+      }
       void onJoin();
+    } else {
+      joinedWithRef.current = null;
+      setDeployedContractAPI(undefined);
+      setDerivedState(undefined);
+      setContractDeployment(undefined);
+      setCounterDeploymentObservable(undefined);
     }
-  }, [onJoin, status?.status, providers]);
+  }, [connectedAPI, providers, onJoin]);
 
   useEffect(() => {
     if (!counterDeploymentObservable) {
@@ -62,7 +76,7 @@ export const useContractSubscription = () => {
     ) {
       return;
     }
-    setDeployedContractAPI((prev) => prev || contractDeployment.api);
+    setDeployedContractAPI(contractDeployment.api);
   }, [contractDeployment, setDeployedContractAPI]);
 
   useEffect(() => {
