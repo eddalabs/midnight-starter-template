@@ -3,23 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "workspaces": [
-    "counter-cli",
-    "counter-contract",
-    "frontend-vite-react"
-  ],
   "scripts": {
     "compact": "turbo run compact",
     "build": "turbo run build",
-    "build-production": "git lfs pull && cd counter-contract && npm run build && cd ../frontend-vite-react && npm run build",
-    "setup-standalone": "cd counter-cli && npm run setup-undeployed",
-    "dev:frontend": "cd frontend-vite-react && npm run dev",
+    "build-production": "git lfs pull && cd counter-contract && pnpm build && cd ../frontend-vite-react && pnpm build",
+    "setup-standalone": "cd counter-cli && pnpm setup-undeployed",
+    "dev:frontend": "cd frontend-vite-react && pnpm dev",
     "lint": "turbo run lint"
   },
   "engines": {
     "node": ">=22"
   },
-  "packageManager": "npm@10.9.2",
+  "packageManager": "pnpm@10.14.0",
   "devDependencies": {
     "@eslint/js": "^9.39.2",
     "@types/node": "^25.2.0",
