@@ -2,6 +2,6 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "buildCommand": "pnpm build-production",
   "outputDirectory": "frontend-vite-react/dist",
-  "installCommand": "npm install",
+  "installCommand": "pnpm install",
   "framework": "vite"
 }
