@@ -12,7 +12,7 @@ import type {
   ContractState,
 } from "@midnight-ntwrk/compact-runtime";
 import { retryWithBackoff } from "./retryWithBackoff";
-import type { TransactionId, ZswapChainState } from "@midnight-ntwrk/ledger-v7";
+import type { TransactionId, ZswapChainState } from "@midnight-ntwrk/ledger-v8";
 import type { Observable } from "rxjs";
 
 export type ProviderAction =

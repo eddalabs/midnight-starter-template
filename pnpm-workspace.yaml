@@ -1,0 +1,4 @@
+packages:
+  - "counter-cli"
+  - "counter-contract"
+  - "frontend-vite-react"
