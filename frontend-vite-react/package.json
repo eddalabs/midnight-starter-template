@@ -22,6 +22,7 @@
     "@tanstack/router-devtools": "^1.147.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "cross-fetch": "^4.1.0",
     "fp-ts": "^2.16.11",
     "lucide-react": "^0.517.0",
     "react": "^19.1.0",

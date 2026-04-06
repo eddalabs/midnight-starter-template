@@ -1,5 +1,5 @@
 import type { ProofProvider, ProveTxConfig, ZKConfigProvider } from "@midnight-ntwrk/midnight-js-types";
-import type { UnprovenTransaction } from "@midnight-ntwrk/ledger-v7";
+import type { UnprovenTransaction } from "@midnight-ntwrk/ledger-v8";
 import { httpClientProofProvider } from "@midnight-ntwrk/midnight-js-http-client-proof-provider";
 import type { UnboundTransaction } from "@midnight-ntwrk/midnight-js-types";
 
