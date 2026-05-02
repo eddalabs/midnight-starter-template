@@ -5,24 +5,28 @@ This project is built on the Midnight Network.
 
 ## 📦 Prerequisites
 
-- [Node.js](https://nodejs.org/) (v22+) & [npm](https://www.npmjs.com/) (v11+)
+- [Node.js](https://nodejs.org/) (v22+) & [pnpm](https://pnpm.io/) (v10+)
 - [Docker](https://docs.docker.com/get-docker/)
 - [Git LFS](https://git-lfs.com/) (for large files)
 - [Compact](https://docs.midnight.network/relnotes/compact-tools) (Midnight developer tools)
 - [Lace](https://chromewebstore.google.com/detail/hgeekaiplokcnmakghbdfbgnlfheichg?utm_source=item-share-cb) (Browser wallet extension)
 - [Faucet](https://faucet.preview.midnight.network/) (Preview Network Faucet)
 
-## Known Issues
-
-- N/A
-
 ## 🛠️ Setup
 
 ### 1️⃣ Install Git LFS
 
 ```bash
-# Install and initialize Git LFS
-sudo dnf install git-lfs  # For Fedora/RHEL
+# macOS
+brew install git-lfs
+
+# Debian/Ubuntu
+sudo apt install git-lfs
+
+# Fedora/RHEL
+sudo dnf install git-lfs
+
+# Initialize Git LFS (run once per machine)
 git lfs install
 ```
 
@@ -38,15 +42,16 @@ curl --proto '=https' --tlsv1.2 -LsSf \
 compact update +0.30.0
 ```
 
-### 3️⃣ Install Node.js and docker
-- [Node.js](https://nodejs.org/) & [npm](https://www.npmjs.com/)
+### 3️⃣ Install Node.js, pnpm and Docker
+- [Node.js](https://nodejs.org/) (v22+)
+- [pnpm](https://pnpm.io/installation) (v10+)
 - [Docker](https://docs.docker.com/get-docker/)
 
 ### 4️⃣ Verify Installation
 ```bash
 # Check versions
-node -v  
-npm -v   
+node -v
+pnpm -v
 docker -v
 git lfs version
 compact check  # Should show latest version
@@ -64,9 +69,9 @@ compact check  # Should show latest version
 
 ### Install Project Dependencies and compile contracts
   ```bash
-   # In one terminal (from project root)
-   npm install
-   npm run build
+   # From project root
+   pnpm install
+   pnpm build
    ```
 
 ### Setup Env variables
@@ -76,22 +81,43 @@ compact check  # Should show latest version
 
 2. **Create .env file from template under frontend-vite-react folder**
    - [`frontend-vite-react/.env_template`](./frontend-vite-react/.env_template)
-   
 
-### Start Development In Preview-Preprod-Mainnet Network or
-   ```bash   
-   # In one terminal (from project root)
-   npm run dev:frontend
+
+### Start Development on Preview / Preprod / Mainnet
+   ```bash
+   # From project root
+   pnpm dev:frontend
    ```
 
-### Start Development In Undeployed Network
-   ```bash   
+### Start Development on Undeployed (standalone) Network
+   ```bash
    # In one terminal (from project root)
-   npm run setup-standalone
-   
+   pnpm setup-standalone
+
    # In another terminal (from project root)
-   npm run dev:frontend
+   pnpm dev:frontend
    ```
+
+## 🧪 Run Tests
+
+Tests live in `counter-cli`. Run from the project root:
+
+```bash
+# Standalone (no live network required)
+pnpm --filter @eddalabs/counter-cli test-undeployed
+
+# Against the Preview testnet
+pnpm --filter @eddalabs/counter-cli test-preview
+
+# Against the Preprod network
+pnpm --filter @eddalabs/counter-cli test-preprod
+```
+
+## 📚 More Documentation
+
+- [`DEPLOYMENT_PROCEDURE.md`](./DEPLOYMENT_PROCEDURE.md) — Vercel deployment guide (Git LFS, env vars, build settings).
+- [`educational-material/`](./educational-material/) — Midnight Sessions video walkthroughs and content plans by Edda Labs.
+
 ---
 
 <div align="center"><p>Built with ❤️ by <a href="https://eddalabs.io">Edda Labs</a></p></div>

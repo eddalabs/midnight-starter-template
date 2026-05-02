@@ -1,54 +1,62 @@
-# React + TypeScript + Vite
+# `@eddalabs/frontend-vite-react`
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The React + Vite frontend for the [Midnight Starter Template](../README.md). It connects to the Lace wallet, talks to the deployed Counter contract, and demonstrates the dApp Connector flow against any Midnight network (standalone, Preview, Preprod, Mainnet).
 
-Currently, two official plugins are available:
+> 💡 Most setup steps live in the **[root README](../README.md)**. This file documents what's specific to the frontend package.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Stack
 
-## Expanding the ESLint configuration
+- React 19 + TypeScript
+- Vite 6
+- TanStack Router
+- Tailwind CSS v4 + Radix UI
+- pino for structured logging
+- Midnight `dapp-connector-api` + `midnight-js-*` SDKs
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Local development
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+From the **project root** (recommended — Turbo will compile the contract and copy keys):
+
+```bash
+pnpm install
+pnpm build
+pnpm dev:frontend
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Or from this directory:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+```bash
+pnpm dev      # Vite dev server
+pnpm build    # Copies contract keys + bundles for production
+pnpm preview  # Preview a production build
+pnpm lint     # ESLint
 ```
+
+## Environment
+
+Create `.env` from [`.env_template`](./.env_template):
+
+| Variable | Description |
+|---|---|
+| `VITE_CONTRACT_ADDRESS` | Address of the deployed Counter contract to connect to. Leave empty to deploy a fresh one from the UI. |
+
+## Project layout
+
+```
+src/
+├── App.tsx              # Application shell
+├── main.tsx             # Vite entrypoint
+├── routes/              # TanStack Router route tree
+├── pages/               # Page-level components (home, counter, wallet-ui)
+├── components/          # Shared UI (theme provider, mode toggle, ui/*)
+├── modules/midnight/    # Wallet widget + counter-sdk hooks/contexts
+├── layouts/             # Layout wrappers
+├── lib/                 # Utilities
+└── globals.ts           # Network/runtime globals
+```
+
+The compiled contract artifacts are copied into `public/midnight/counter/{keys,zkir}` by `pnpm copy-contract-keys` (run automatically as part of `pnpm build`). They are gitignored — run a build before deploying.
+
+## Deployment
+
+Production deployment to Vercel is documented in [`DEPLOYMENT_PROCEDURE.md`](../DEPLOYMENT_PROCEDURE.md). Git LFS must be enabled in Vercel for the contract verifier/prover keys to be served correctly.
