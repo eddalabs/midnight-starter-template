@@ -71,7 +71,7 @@ export class MidnightBrowserWallet {
           rdns: _wallet.rdns,
         });
       } catch (e) {
-        console.log(e);
+        console.error(e);
       }
     }
     return wallets;

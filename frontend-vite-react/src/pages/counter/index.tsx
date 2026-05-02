@@ -45,11 +45,6 @@ export const Counter = () => {
 
   const deployNew = async () => {
     const { address } = await onDeploy();
-    if (address) {
-      console.log('=== CONTRACT DEPLOYED ===');
-      console.log('Contract Address:', address);
-      console.log('========================');
-    }
     setDeployedAddress(address);
   };
 
