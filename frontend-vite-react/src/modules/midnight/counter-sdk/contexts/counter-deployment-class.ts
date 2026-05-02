@@ -116,6 +116,13 @@ export class DeployedTemplateManager implements DeployedAPIProvider {
   ): Promise<void> {
     try {
       if (this.providers) {
+
+        // const item = this.localState.getContractPrivateId(contractAddress);
+        // if (item != null) {
+        // } else {
+        //   this.localState.setContractPrivateId(CounterPrivateStateId, contractAddress);
+        // }
+        
         const api = await ContractController.join(
           CounterPrivateStateId,
           this.providers,
