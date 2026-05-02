@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint-and-typecheck:
+    name: Lint & typecheck
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # We don't pull LFS here — the contract toolchain isn't installed in CI,
+          # so we skip anything that depends on the compiled contract artifacts.
+          lfs: false
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.14.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # Lint and typecheck run as warnings (continue-on-error) for now because
+      # there are pre-existing violations on main. Once those are cleaned up,
+      # remove `continue-on-error` to make these required checks.
+
+      - name: Lint counter-cli
+        run: pnpm --filter @eddalabs/counter-cli exec eslint src
+        continue-on-error: true
+
+      - name: Lint frontend
+        run: pnpm --filter @eddalabs/frontend-vite-react exec eslint .
+        continue-on-error: true
+
+      - name: Typecheck counter-cli
+        run: pnpm --filter @eddalabs/counter-cli typecheck
+        continue-on-error: true
