@@ -123,11 +123,6 @@ export class ContractController implements ContractControllerInterface {
       },
     });
 
-    console.log('=== CONTRACT DEPLOYED ===');
-    console.log('Contract Address:', contractAddress);
-    console.log('Deploy TX Data:', deployedContract.deployTxData.public);
-    console.log('========================');
-
     return new ContractController(contractPrivateStateId, deployedContract, providers, logger);
   }
 

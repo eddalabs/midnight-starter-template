@@ -53,6 +53,7 @@ export default [
       '@typescript-eslint/no-unsafe-assignment': 'warn',
       '@typescript-eslint/no-unsafe-member-access': 'warn',
       '@typescript-eslint/no-unsafe-argument': 'warn',
+      'no-console': ['warn', { allow: ['error', 'warn'] }],
     },
   },
 ];

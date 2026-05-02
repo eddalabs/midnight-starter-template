@@ -7,17 +7,9 @@ export const checkProofServerStatus = async (
     if (!response.ok) {
       return false;
     }
-
-    // const text = await response.text();
-    // console.log({text})
-    // if (text.includes("We're alive 🎉!")) {
-    //   return true;
-    // }
-    // return false;
-
     return true;
   } catch (e) {
-    console.log(e);
+    console.error(e);
     return false;
   }
 };

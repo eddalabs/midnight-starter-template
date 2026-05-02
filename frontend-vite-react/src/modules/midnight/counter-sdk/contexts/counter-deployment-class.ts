@@ -86,12 +86,7 @@ export class DeployedTemplateManager implements DeployedAPIProvider {
           this.providers,
           this.logger
         );
-        // this.localState.setContractPrivateId(CounterPrivateStateId, api.deployedContractAddress);
         this.localState.addContract(api.deployedContractAddress);
-
-        console.log('=== CONTRACT DEPLOYED ===');
-        console.log('Contract Address:', api.deployedContractAddress);
-        console.log('========================');
 
         deployment.next({
           status: "deployed",
@@ -121,12 +116,6 @@ export class DeployedTemplateManager implements DeployedAPIProvider {
   ): Promise<void> {
     try {
       if (this.providers) {
-        // const item = this.localState.getContractPrivateId(contractAddress);
-
-        // if (item != null) {
-        // } else {
-        //   this.localState.setContractPrivateId(CounterPrivateStateId, contractAddress);
-        // }
         const api = await ContractController.join(
           CounterPrivateStateId,
           this.providers,
