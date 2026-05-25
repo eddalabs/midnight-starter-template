@@ -17,7 +17,7 @@
   },
   "dependencies": {},
   "scripts": {
-    "compact": "compact compile +0.30.0 src/counter.compact src/managed/counter",
+    "compact": "compact compile +0.31.0 src/counter.compact src/managed/counter",
     "test": "vitest run",
     "test:compile": "pnpm compact && vitest run",
     "build": "rm -rf dist && tsc --project tsconfig.build.json && cp -Rf ./src/managed ./dist/managed && cp ./src/counter.compact ./dist",

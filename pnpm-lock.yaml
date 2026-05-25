@@ -12,8 +12,8 @@ importers:
         specifier: 2.5.0
         version: 2.5.0
       '@midnight-ntwrk/compact-runtime':
-        specifier: 0.15.0
-        version: 0.15.0
+        specifier: 0.16.0
+        version: 0.16.0
       '@midnight-ntwrk/dapp-connector-api':
         specifier: 4.0.1
         version: 4.0.1
@@ -837,6 +837,9 @@ packages:
 
   '@midnight-ntwrk/compact-runtime@0.15.0':
     resolution: {integrity: sha512-6+odrxb83ZZwF29SqNBBgaOR3hf5ej4KZVGibDwdXta9+uiv6qYW0fMrsKP9S+c2AqvY+vEb5NEFFI54lA7G5A==}
+
+  '@midnight-ntwrk/compact-runtime@0.16.0':
+    resolution: {integrity: sha512-UR8+MI5zol+gkne17ZZru8xmZNf11xMgQJkiLT9KWsF+QD8Wuz1WONaqQLL0RAZ2aN2XlRsBFd0ViKDVh8prFw==}
 
   '@midnight-ntwrk/dapp-connector-api@4.0.1':
     resolution: {integrity: sha512-IstRo8xfmlJlGgUcAJeRzPUmGCp0/xZR3/bfTOk33MHrzbGmB79r/zYziGavcclo1pkkoBHAodX4vz3xgFxczw==}
@@ -4994,6 +4997,12 @@ snapshots:
       tslib: 2.8.1
 
   '@midnight-ntwrk/compact-runtime@0.15.0':
+    dependencies:
+      '@midnight-ntwrk/onchain-runtime-v3': 3.0.0
+      '@types/object-inspect': 1.13.0
+      object-inspect: 1.13.4
+
+  '@midnight-ntwrk/compact-runtime@0.16.0':
     dependencies:
       '@midnight-ntwrk/onchain-runtime-v3': 3.0.0
       '@types/object-inspect': 1.13.0
