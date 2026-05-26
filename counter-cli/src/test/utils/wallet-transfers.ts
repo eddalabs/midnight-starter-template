@@ -1,9 +1,9 @@
-import { CombinedTokenTransfer } from '@midnight-ntwrk/wallet-sdk-facade';
+import { CombinedTokenTransfer, MidnightBech32m, UnshieldedAddress } from '@midnight-ntwrk/wallet-sdk';
+import { networkId } from '@midnight-ntwrk/midnight-js';
 import * as api from '../../api';
 import * as ledger from '@midnight-ntwrk/ledger-v8';
 import { tokenValue } from './utils';
-import { MidnightBech32m, UnshieldedAddress } from '@midnight-ntwrk/wallet-sdk-address-format';
-import { getNetworkId } from '@midnight-ntwrk/midnight-js-network-id';
+
 
 //allows to transfer unshielded tokens
 //TODO: correct error with address
@@ -43,7 +43,7 @@ export async function sendArbitraryUnshieldedToken(wallet: api.WalletContext, ad
 
   //address Hex format
   const addressBech32m = MidnightBech32m.parse(address);
-  const addressHex = UnshieldedAddress.codec.decode(getNetworkId(), addressBech32m);
+  const addressHex = UnshieldedAddress.codec.decode(networkId.getNetworkId(), addressBech32m);
 
   const outputs = [
     {
@@ -56,7 +56,7 @@ export async function sendArbitraryUnshieldedToken(wallet: api.WalletContext, ad
   const intent = ledger.Intent.new(new Date(Date.now() + 30 * 60 * 1000));
   intent.guaranteedUnshieldedOffer = ledger.UnshieldedOffer.new([], outputs, []);
 
-  const arbitraryTx = ledger.Transaction.fromParts(getNetworkId(), undefined, undefined, intent);
+  const arbitraryTx = ledger.Transaction.fromParts(networkId.getNetworkId(), undefined, undefined, intent);
 
   const recipe = await wallet.wallet.balanceUnprovenTransaction(
     arbitraryTx,
