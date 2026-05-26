@@ -1,11 +1,11 @@
-import type { ProverKey, VerifierKey, ZKIR } from '@midnight-ntwrk/midnight-js-types';
+import type { types } from '@midnight-ntwrk/midnight-js';
 import { fetch } from 'cross-fetch';
 import { FetchZkConfigProvider } from '@midnight-ntwrk/midnight-js-fetch-zk-config-provider';
 
 type CacheKey = `proverKey:${string}` | `verifierKey:${string}` | `zkir:${string}`;
 
 export class CachedFetchZkConfigProvider<K extends string> extends FetchZkConfigProvider<K> {
-  private readonly cache: Map<CacheKey, ProverKey | VerifierKey | ZKIR>;
+  private readonly cache: Map<CacheKey, types.ProverKey | types.VerifierKey | types.ZKIR>;
 
   constructor(
     baseURL: string,
@@ -20,12 +20,12 @@ export class CachedFetchZkConfigProvider<K extends string> extends FetchZkConfig
     return `${type}:${circuitId}` as CacheKey;
   }
 
-  async getProverKey(circuitId: K): Promise<ProverKey> {
+  async getProverKey(circuitId: K): Promise<types.ProverKey> {
     try {
       this.callback('downloadProverStarted');
       const cacheKey = this.generateCacheKey('proverKey', circuitId);
       if (this.cache.has(cacheKey)) {
-        return this.cache.get(cacheKey) as ProverKey;
+        return this.cache.get(cacheKey) as types.ProverKey;
       }
 
       const proverKey = await super.getProverKey(circuitId);
@@ -36,10 +36,10 @@ export class CachedFetchZkConfigProvider<K extends string> extends FetchZkConfig
     }
   }
 
-  async getVerifierKey(circuitId: K): Promise<VerifierKey> {
+  async getVerifierKey(circuitId: K): Promise<types.VerifierKey> {
     const cacheKey = this.generateCacheKey('verifierKey', circuitId);
     if (this.cache.has(cacheKey)) {
-      return this.cache.get(cacheKey) as VerifierKey;
+      return this.cache.get(cacheKey) as types.VerifierKey;
     }
 
     const verifierKey = await super.getVerifierKey(circuitId);
@@ -47,10 +47,10 @@ export class CachedFetchZkConfigProvider<K extends string> extends FetchZkConfig
     return verifierKey;
   }
 
-  async getZKIR(circuitId: K): Promise<ZKIR> {
+  async getZKIR(circuitId: K): Promise<types.ZKIR> {
     const cacheKey = this.generateCacheKey('zkir', circuitId);
     if (this.cache.has(cacheKey)) {
-      return this.cache.get(cacheKey) as ZKIR;
+      return this.cache.get(cacheKey) as types.ZKIR;
     }
 
     const zkir = await super.getZKIR(circuitId);

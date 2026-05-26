@@ -1,13 +1,21 @@
-import type { PrivateStateProvider, PrivateStateId } from '@midnight-ntwrk/midnight-js-types';
-import type { Logger } from 'pino';
+import type { types } from "@midnight-ntwrk/midnight-js";
+import type { ContractAddress } from "@midnight-ntwrk/ledger-v8";
+import type { SigningKey } from "@midnight-ntwrk/compact-runtime";
+import type { Logger } from "pino";
 
-export class WrappedPrivateStateProvider<PSI extends PrivateStateId = PrivateStateId, PS = any>
-  implements PrivateStateProvider<PSI, PS>
-{
+export class WrappedPrivateStateProvider<
+  PSI extends types.PrivateStateId = types.PrivateStateId,
+  PS = any,
+> implements types.PrivateStateProvider<PSI, PS> {
   constructor(
-    private readonly privateDataProvider: PrivateStateProvider<PSI, PS>,
+    private readonly privateDataProvider: types.PrivateStateProvider<PSI, PS>,
     private readonly logger?: Logger,
   ) {}
+
+  setContractAddress(address: ContractAddress): void {
+    this.logger?.trace(`Setting contract address: ${address}`);
+    this.privateDataProvider.setContractAddress(address);
+  }
 
   set(privateStateId: PSI, state: PS): Promise<void> {
     this.logger?.trace(`Setting private state for key: ${privateStateId}`);
@@ -25,27 +33,60 @@ export class WrappedPrivateStateProvider<PSI extends PrivateStateId = PrivateSta
   }
 
   clear(): Promise<void> {
-    this.logger?.trace('Clearing private state');
+    this.logger?.trace("Clearing private state");
     return this.privateDataProvider.clear();
   }
 
-  setSigningKey(address: string, signingKey: string): Promise<void> {
+  setSigningKey(
+    address: ContractAddress,
+    signingKey: SigningKey,
+  ): Promise<void> {
     this.logger?.trace(`Setting signing key for key: ${address}`);
     return this.privateDataProvider.setSigningKey(address, signingKey);
   }
 
-  getSigningKey(address: string): Promise<null | string> {
+  getSigningKey(address: ContractAddress): Promise<SigningKey | null> {
     this.logger?.trace(`Getting signing key for key: ${address}`);
     return this.privateDataProvider.getSigningKey(address);
   }
 
-  removeSigningKey(address: string): Promise<void> {
+  removeSigningKey(address: ContractAddress): Promise<void> {
     this.logger?.trace(`Removing signing key for key: ${address}`);
     return this.privateDataProvider.removeSigningKey(address);
   }
 
   clearSigningKeys(): Promise<void> {
-    this.logger?.trace('Clearing signing keys');
+    this.logger?.trace("Clearing signing keys");
     return this.privateDataProvider.clearSigningKeys();
+  }
+
+  exportPrivateStates(
+    options?: types.ExportPrivateStatesOptions,
+  ): Promise<types.PrivateStateExport> {
+    this.logger?.trace("Exporting private states");
+    return this.privateDataProvider.exportPrivateStates(options);
+  }
+
+  importPrivateStates(
+    exportData: types.PrivateStateExport,
+    options?: types.ImportPrivateStatesOptions,
+  ): Promise<types.ImportPrivateStatesResult> {
+    this.logger?.trace("Importing private states");
+    return this.privateDataProvider.importPrivateStates(exportData, options);
+  }
+
+  exportSigningKeys(
+    options?: types.ExportSigningKeysOptions,
+  ): Promise<types.SigningKeyExport> {
+    this.logger?.trace("Exporting signing keys");
+    return this.privateDataProvider.exportSigningKeys(options);
+  }
+
+  importSigningKeys(
+    exportData: types.SigningKeyExport,
+    options?: types.ImportSigningKeysOptions,
+  ): Promise<types.ImportSigningKeysResult> {
+    this.logger?.trace("Importing signing keys");
+    return this.privateDataProvider.importSigningKeys(exportData, options);
   }
 }

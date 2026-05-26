@@ -1,17 +1,16 @@
 import { type CounterPrivateState, Counter, createPrivateState } from '@eddalabs/counter-contract';
 import type { ProvableCircuitId } from '@midnight-ntwrk/compact-js';
-import type { MidnightProviders } from '@midnight-ntwrk/midnight-js-types';
-import type { DeployedContract, FoundContract } from '@midnight-ntwrk/midnight-js-contracts';
+import { contracts, types } from '@midnight-ntwrk/midnight-js';
 
 export type CounterCircuits = ProvableCircuitId<Counter.Contract<CounterPrivateState>>;
 
 export const CounterPrivateStateId = 'counterPrivateState';
 
-export type CounterProviders = MidnightProviders<CounterCircuits, typeof CounterPrivateStateId, CounterPrivateState>;
+export type CounterProviders = types.MidnightProviders<CounterCircuits, typeof CounterPrivateStateId, CounterPrivateState>;
 
 export type CounterContract = Counter.Contract<CounterPrivateState>;
 
-export type DeployedCounterContract = DeployedContract<CounterContract> | FoundContract<CounterContract>;
+export type DeployedCounterContract = contracts.DeployedContract<CounterContract> | contracts.FoundContract<CounterContract>;
 
 export type UserAction = {
   increment: string | undefined;  

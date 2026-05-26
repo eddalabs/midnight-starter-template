@@ -3,8 +3,7 @@ import { type ContractAddress } from '@midnight-ntwrk/compact-runtime';
 import * as Rx from 'rxjs';
 import { CounterPrivateStateId, CounterProviders, DeployedCounterContract, emptyState, UserAction, type DerivedState } from './common-types';
 import { Counter, CounterPrivateState, createPrivateState } from '@eddalabs/counter-contract';
-import { deployContract, findDeployedContract } from '@midnight-ntwrk/midnight-js-contracts';
-import { PrivateStateProvider } from '@midnight-ntwrk/midnight-js-types';
+import { contracts, types } from '@midnight-ntwrk/midnight-js';
 import { CompiledContract } from '@midnight-ntwrk/compact-js';
 
 const counterCompiledContract = CompiledContract.make('counter', Counter.Contract).pipe(
@@ -106,7 +105,7 @@ export class ContractController implements ContractControllerInterface {
         providers       
       },
     });    
-    const deployedContract = await deployContract(providers, {
+    const deployedContract = await contracts.deployContract(providers, {
       compiledContract: counterCompiledContract,
       privateStateId: contractPrivateStateId,
       initialPrivateState: await ContractController.getPrivateState(contractPrivateStateId, providers.privateStateProvider),
@@ -140,7 +139,7 @@ export class ContractController implements ContractControllerInterface {
       },
     });
 
-    const deployedContract = await findDeployedContract(providers, {
+    const deployedContract = await contracts.findDeployedContract(providers, {
       contractAddress,
       compiledContract: counterCompiledContract,
       privateStateId: contractPrivateStateId,
@@ -160,7 +159,7 @@ export class ContractController implements ContractControllerInterface {
 
   private static async getPrivateState(
     counterPrivateStateId: typeof CounterPrivateStateId,
-    privateStateProvider: PrivateStateProvider<typeof CounterPrivateStateId, CounterPrivateState>,
+    privateStateProvider: types.PrivateStateProvider<typeof CounterPrivateStateId, CounterPrivateState>,
   ): Promise<CounterPrivateState> {
     const existingPrivateState = await privateStateProvider.get(counterPrivateStateId);
     const initialState = await this.getOrCreateInitialPrivateState(counterPrivateStateId, privateStateProvider);
@@ -169,7 +168,7 @@ export class ContractController implements ContractControllerInterface {
 
   static async getOrCreateInitialPrivateState(
     counterPrivateStateId: typeof CounterPrivateStateId,
-    privateStateProvider: PrivateStateProvider<typeof CounterPrivateStateId, CounterPrivateState>,
+    privateStateProvider: types.PrivateStateProvider<typeof CounterPrivateStateId, CounterPrivateState>,
   ): Promise<CounterPrivateState> {
     let state = await privateStateProvider.get(counterPrivateStateId);
     

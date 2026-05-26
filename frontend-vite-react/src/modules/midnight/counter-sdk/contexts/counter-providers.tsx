@@ -1,13 +1,5 @@
 import * as ledger from "@midnight-ntwrk/ledger-v8";
-import {
-  type MidnightProvider,
-  type WalletProvider,
-  type UnboundTransaction,
-  PrivateStateProvider,
-  ZKConfigProvider,
-  ProofProvider,
-  PublicDataProvider,
-} from "@midnight-ntwrk/midnight-js-types";
+import { types } from "@midnight-ntwrk/midnight-js";
 import { createContext, useCallback, useMemo, useState } from "react";
 import { indexerPublicDataProvider } from "@midnight-ntwrk/midnight-js-indexer-public-data-provider";
 // import { levelPrivateStateProvider } from "@midnight-ntwrk/midnight-js-level-private-state-provider";
@@ -34,12 +26,12 @@ import { CounterPrivateState } from "@eddalabs/counter-contract";
 import { fromHex, toHex } from "@midnight-ntwrk/compact-runtime";
 
 export interface ProvidersState {
-  privateStateProvider: PrivateStateProvider<typeof CounterPrivateStateId>;
-  zkConfigProvider?: ZKConfigProvider<CounterCircuits>;
-  proofProvider: ProofProvider;
-  publicDataProvider?: PublicDataProvider;
-  walletProvider?: WalletProvider;
-  midnightProvider?: MidnightProvider;
+  privateStateProvider: types.PrivateStateProvider<typeof CounterPrivateStateId>;
+  zkConfigProvider?: types.ZKConfigProvider<CounterCircuits>;
+  proofProvider: types.ProofProvider;
+  publicDataProvider?: types.PublicDataProvider;
+  walletProvider?: types.WalletProvider;
+  midnightProvider?: types.MidnightProvider;
   providers?: CounterProviders;
   flowMessage?: string;
 }
@@ -77,7 +69,7 @@ export const Provider = ({ children, logger }: ProviderProps) => {
     setFlowMessage(ACTION_MESSAGES[action]);
   }, []);
 
-  const privateStateProvider: PrivateStateProvider<
+  const privateStateProvider: types.PrivateStateProvider<
     typeof CounterPrivateStateId
   > = useMemo(
     () =>
@@ -91,7 +83,7 @@ export const Provider = ({ children, logger }: ProviderProps) => {
     [logger, status],
   );
 
-  const publicDataProvider: PublicDataProvider | undefined = useMemo(
+  const publicDataProvider: types.PublicDataProvider | undefined = useMemo(
     () =>
       serviceUriConfig
         ? new WrappedPublicDataProvider(
@@ -130,7 +122,7 @@ export const Provider = ({ children, logger }: ProviderProps) => {
     [serviceUriConfig, zkConfigProvider, providerCallback, status],
   );
 
-  const walletProvider: WalletProvider = useMemo(
+  const walletProvider: types.WalletProvider = useMemo(
     () =>
       connectedAPI
         ? {
@@ -156,11 +148,9 @@ export const Provider = ({ children, logger }: ProviderProps) => {
                 // {sender} is appended by the extension's messaging layer. We must pass an options
                 // object as the second arg so {sender} lands in the correct (third) position.
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                const received =           
-                  await (connectedAPI as any).balanceUnsealedTransaction(
-                    serializedTx,
-                    {},
-                  );
+                const received = await (
+                  connectedAPI as any
+                ).balanceUnsealedTransaction(serializedTx, {});
                 return ledger.Transaction.deserialize<
                   ledger.SignatureEnabled,
                   ledger.Proof,
@@ -187,7 +177,7 @@ export const Provider = ({ children, logger }: ProviderProps) => {
     [connectedAPI, providerCallback, status],
   );
 
-  const midnightProvider: MidnightProvider = useMemo(
+  const midnightProvider: types.MidnightProvider = useMemo(
     () =>
       connectedAPI
         ? {

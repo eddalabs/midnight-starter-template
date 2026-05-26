@@ -1,18 +1,13 @@
 import type {
-  BlockHashConfig,
-  BlockHeightConfig,
-  ContractStateObservableConfig,
-  FinalizedTxData,
-  PublicDataProvider,
-  UnshieldedBalances,
-} from "@midnight-ntwrk/midnight-js-types";
+types
+} from "@midnight-ntwrk/midnight-js";
 import type { Logger } from "pino";
 import type {
   ContractAddress,
   ContractState,
 } from "@midnight-ntwrk/compact-runtime";
 import { retryWithBackoff } from "./retryWithBackoff";
-import type { TransactionId, ZswapChainState } from "@midnight-ntwrk/ledger-v8";
+import type { LedgerParameters, TransactionId, ZswapChainState } from "@midnight-ntwrk/ledger-v8";
 import type { Observable } from "rxjs";
 
 export type ProviderAction =
@@ -31,9 +26,9 @@ export type ActionMessages = {
   [K in ProviderAction]: string | undefined;
 };
 
-export class WrappedPublicDataProvider implements PublicDataProvider {
+export class WrappedPublicDataProvider implements types.PublicDataProvider {
   constructor(
-    private readonly wrapped: PublicDataProvider,
+    private readonly wrapped: types.PublicDataProvider,
     private readonly callback: (
       action: "watchForTxDataStarted" | "watchForTxDataDone"
     ) => void,
@@ -42,14 +37,14 @@ export class WrappedPublicDataProvider implements PublicDataProvider {
 
   contractStateObservable(
     address: ContractAddress,
-    config: ContractStateObservableConfig
+    config: types.ContractStateObservableConfig
   ): Observable<ContractState> {
     return this.wrapped.contractStateObservable(address, config);
   }
 
   queryContractState(
     contractAddress: ContractAddress,
-    config?: BlockHeightConfig | BlockHashConfig
+    config?: types.BlockHeightConfig | types.BlockHashConfig
   ): Promise<ContractState | null> {
     return retryWithBackoff(
       () => this.wrapped.queryContractState(contractAddress, config),
@@ -70,8 +65,8 @@ export class WrappedPublicDataProvider implements PublicDataProvider {
 
   queryZSwapAndContractState(
     contractAddress: ContractAddress,
-    config?: BlockHeightConfig | BlockHashConfig
-  ): Promise<[ZswapChainState, ContractState] | null> {
+    config?: types.BlockHeightConfig | types.BlockHashConfig
+  ): Promise<[ZswapChainState, ContractState, LedgerParameters] | null> {
     return retryWithBackoff(
       () => this.wrapped.queryZSwapAndContractState(contractAddress, config),
       "queryZSwapAndContractState",
@@ -81,8 +76,8 @@ export class WrappedPublicDataProvider implements PublicDataProvider {
 
   queryUnshieldedBalances(
     contractAddress: ContractAddress,
-    config?: BlockHeightConfig | BlockHashConfig
-  ): Promise<UnshieldedBalances | null> {
+    config?: types.BlockHeightConfig | types.BlockHashConfig
+  ): Promise<types.UnshieldedBalances | null> {
     return retryWithBackoff(
       () => this.wrapped.queryUnshieldedBalances(contractAddress, config),
       "queryZSwapAndContractState",
@@ -102,7 +97,7 @@ export class WrappedPublicDataProvider implements PublicDataProvider {
 
   watchForUnshieldedBalances(
     contractAddress: ContractAddress
-  ): Promise<UnshieldedBalances> {
+  ): Promise<types.UnshieldedBalances> {
     return retryWithBackoff(
       () => this.wrapped.watchForUnshieldedBalances(contractAddress),
       "watchForContractState",
@@ -112,7 +107,7 @@ export class WrappedPublicDataProvider implements PublicDataProvider {
 
   watchForDeployTxData(
     contractAddress: ContractAddress
-  ): Promise<FinalizedTxData> {
+  ): Promise<types.FinalizedTxData> {
     return retryWithBackoff(
       () => this.wrapped.watchForDeployTxData(contractAddress),
       "watchForDeployTxData",
@@ -120,7 +115,7 @@ export class WrappedPublicDataProvider implements PublicDataProvider {
     );
   }
 
-  watchForTxData(txId: TransactionId): Promise<FinalizedTxData> {
+  watchForTxData(txId: TransactionId): Promise<types.FinalizedTxData> {
     // calling a callback is a workaround to show in the UI when the watchForTxData is called
     this.callback("watchForTxDataStarted");
     return retryWithBackoff(
@@ -135,8 +130,8 @@ export class WrappedPublicDataProvider implements PublicDataProvider {
 
   unshieldedBalancesObservable(
     address: ContractAddress,
-    config: ContractStateObservableConfig
-  ): Observable<UnshieldedBalances> {
+    config: types.ContractStateObservableConfig
+  ): Observable<types.UnshieldedBalances> {
     return this.wrapped.unshieldedBalancesObservable(address, config);
   }
 }

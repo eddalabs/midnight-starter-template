@@ -1,9 +1,8 @@
 import type { SigningKey } from "@midnight-ntwrk/compact-runtime";
 import type { ContractAddress } from "@midnight-ntwrk/ledger-v8";
 import {
-  type PrivateStateId,
-  type PrivateStateProvider,
-} from "@midnight-ntwrk/midnight-js-types";
+  types
+} from "@midnight-ntwrk/midnight-js";
 
 /**
  * A simple in-memory implementation of private state provider. Makes it easy to capture and rewrite private state from deploy.
@@ -12,9 +11,9 @@ import {
  * @returns {PrivateStateProvider<PSI, PS>} An in-memory private state provider.
  */
 export const inMemoryPrivateStateProvider = <
-  PSI extends PrivateStateId,
+  PSI extends types.PrivateStateId,
   PS,
->(): PrivateStateProvider<PSI, PS> => {
+>(): types.PrivateStateProvider<PSI, PS> => {
   const record = new Map<PSI, PS>();
   const signingKeys = {} as Record<ContractAddress, SigningKey>;
 
@@ -104,6 +103,38 @@ export const inMemoryPrivateStateProvider = <
         delete signingKeys[contractAddress];
       });
       return Promise.resolve();
+    },
+    /**
+     * Not supported by the in-memory provider — exporting requires encryption material this implementation does not track.
+     */
+    exportPrivateStates(): Promise<types.PrivateStateExport> {
+      return Promise.reject(
+        new Error("exportPrivateStates is not supported by the in-memory provider"),
+      );
+    },
+    /**
+     * Not supported by the in-memory provider — importing requires decryption material this implementation does not track.
+     */
+    importPrivateStates(): Promise<types.ImportPrivateStatesResult> {
+      return Promise.reject(
+        new Error("importPrivateStates is not supported by the in-memory provider"),
+      );
+    },
+    /**
+     * Not supported by the in-memory provider — see exportPrivateStates.
+     */
+    exportSigningKeys(): Promise<types.SigningKeyExport> {
+      return Promise.reject(
+        new Error("exportSigningKeys is not supported by the in-memory provider"),
+      );
+    },
+    /**
+     * Not supported by the in-memory provider — see importPrivateStates.
+     */
+    importSigningKeys(): Promise<types.ImportSigningKeysResult> {
+      return Promise.reject(
+        new Error("importSigningKeys is not supported by the in-memory provider"),
+      );
     },
   };
 };
