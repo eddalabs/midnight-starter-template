@@ -26,9 +26,6 @@ importers:
       '@midnight-ntwrk/midnight-js':
         specifier: 4.1.0
         version: 4.1.0
-      '@midnight-ntwrk/midnight-js-compact':
-        specifier: 4.1.0
-        version: 4.1.0
       '@midnight-ntwrk/midnight-js-fetch-zk-config-provider':
         specifier: 4.1.0
         version: 4.1.0
@@ -4468,7 +4465,7 @@ packages:
 
 snapshots:
 
-  '@apollo/client@4.2.0(graphql-ws@6.0.8(graphql@16.13.2)(ws@8.19.0))(graphql@16.13.2)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(rxjs@7.8.2)':
+  '@apollo/client@4.2.0(graphql-ws@6.0.8(graphql@16.13.2)(ws@8.21.0))(graphql@16.13.2)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(rxjs@7.8.2)':
     dependencies:
       '@graphql-typed-document-node/core': 3.2.0(graphql@16.13.2)
       '@wry/caches': 1.0.1
@@ -4975,7 +4972,7 @@ snapshots:
 
   '@midnight-ntwrk/midnight-js-indexer-public-data-provider@4.1.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
     dependencies:
-      '@apollo/client': 4.2.0(graphql-ws@6.0.8(graphql@16.13.2)(ws@8.19.0))(graphql@16.13.2)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(rxjs@7.8.2)
+      '@apollo/client': 4.2.0(graphql-ws@6.0.8(graphql@16.13.2)(ws@8.21.0))(graphql@16.13.2)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(rxjs@7.8.2)
       '@midnight-ntwrk/midnight-js-network-id': 4.1.0
       '@midnight-ntwrk/midnight-js-protocol': 4.1.0
       '@midnight-ntwrk/midnight-js-types': 4.1.0
