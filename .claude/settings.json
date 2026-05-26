@@ -1,0 +1,14 @@
+{
+  "extraKnownMarketplaces": {
+    "edda-labs-marketplace": {
+      "source": {
+        "source": "github",
+        "repo": "eddalabs/edda-marketplace"
+      },
+      "autoUpdate": true
+    }
+  },
+  "enabledPlugins": {
+    "midnight@edda-labs-marketplace": true
+  }
+}

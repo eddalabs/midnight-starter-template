@@ -113,6 +113,12 @@ pnpm --filter @eddalabs/counter-cli test-preview
 pnpm --filter @eddalabs/counter-cli test-preprod
 ```
 
+## 🤖 Claude Code Plugin (optional)
+
+This repo ships with a project-level [`.claude/settings.json`](./.claude/settings.json) that registers the [`edda-labs-marketplace`](https://github.com/eddalabs/edda-marketplace) and enables the `midnight` plugin (Midnight-specific skills and helpers for Claude Code).
+
+If you use [Claude Code](https://claude.com/claude-code), it will prompt you to trust these project settings the first time you open the repo. Accept the prompt and the plugin installs automatically — no manual marketplace setup needed. If you don't use Claude Code, this is a no-op.
+
 ## 📚 More Documentation
 
 - [`DEPLOYMENT_PROCEDURE.md`](./DEPLOYMENT_PROCEDURE.md) — Vercel deployment guide (Git LFS, env vars, build settings).
