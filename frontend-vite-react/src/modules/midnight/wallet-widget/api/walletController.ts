@@ -28,7 +28,7 @@ import {
   UnshieldedBalanceDappConnector,
 } from "./common-types";
 import { checkProofServerStatus } from "../utils/proofServer/utils";
-import { setNetworkId } from "@midnight-ntwrk/midnight-js-network-id";
+import { networkId } from "@midnight-ntwrk/midnight-js";
 
 declare global {
   interface Window {
@@ -195,7 +195,7 @@ export class MidnightBrowserWallet {
             throw new Error("Network ID is null");
           }
           MidnightBrowserWallet.setMidnightWalletConnected(rdns, networkID, logger);
-          setNetworkId(networkID);
+          networkId.setNetworkId(networkID);
 
           return wallet;
         })

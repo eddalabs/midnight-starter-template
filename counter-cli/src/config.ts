@@ -1,4 +1,4 @@
-import { setNetworkId } from '@midnight-ntwrk/midnight-js-network-id';
+import { networkId } from '@midnight-ntwrk/midnight-js';
 import path from 'node:path';
 export const currentDir = path.resolve(new URL(import.meta.url).pathname, '..');
 
@@ -22,7 +22,7 @@ export class UndeployedConfig implements Config {
   node = 'http://127.0.0.1:9944';
   proofServer = 'http://127.0.0.1:6300';
   constructor() {
-    setNetworkId('undeployed');
+    networkId.setNetworkId('undeployed');
   }
 }
 
@@ -33,7 +33,7 @@ export class PreviewConfig implements Config {
   node = 'https://rpc.preview.midnight.network';
   proofServer = 'http://127.0.0.1:6300';
   constructor() {
-    setNetworkId('preview');
+    networkId.setNetworkId('preview');
   }
 }
 
@@ -44,7 +44,7 @@ export class PreprodConfig implements Config {
   node = 'https://rpc.preprod.midnight.network';
   proofServer = 'http://127.0.0.1:6300';
   constructor() {
-    setNetworkId('preprod');
+    networkId.setNetworkId('preprod');
   }
 }
 
@@ -55,6 +55,6 @@ export class MainnetConfig implements Config {
   node = 'https://rpc.midnight.network';
   proofServer = 'http://127.0.0.1:6300';
   constructor() {
-    setNetworkId('mainnet');
+    networkId.setNetworkId('mainnet');
   }
 }
