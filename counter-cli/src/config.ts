@@ -1,6 +1,7 @@
 import { networkId } from '@midnight-ntwrk/midnight-js';
 import path from 'node:path';
-export const currentDir = path.resolve(new URL(import.meta.url).pathname, '..');
+import { fileURLToPath } from 'node:url';
+export const currentDir = path.resolve(fileURLToPath(import.meta.url), '..');
 
 export const contractConfig = {
   privateStateStoreName: 'counter-private-state',

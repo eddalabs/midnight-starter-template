@@ -35,5 +35,8 @@
   },
   "dependencies": {    
     "@eddalabs/counter-contract": "workspace:*"    
+  },
+  "devDependencies": {
+    "tsx": "^4.21.0"
   }
 }
