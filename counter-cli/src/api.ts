@@ -10,6 +10,7 @@ import {
   type DeployedCounterContract,
 } from './common-types';
 import { type Config, contractConfig } from './config';
+import { withDustRetry } from './resilient-submit';
 import { Counter, type CounterPrivateState } from '@eddalabs/counter-contract';
 import * as ledger from '@midnight-ntwrk/ledger-v8';
 import {
@@ -107,19 +108,32 @@ export const deploy = async (
   privateState: CounterPrivateState,
 ): Promise<DeployedCounterContract> => {
   logger.info('Deploying counter contract...');
-  const counterContract = await contracts.deployContract(providers, {
-    compiledContract: counterCompiledContract,
-    privateStateId: 'counterPrivateState',
-    initialPrivateState: privateState,
-    args: [],
-  });
+  // Retry on a stale DUST fee proof (error 170) by REBUILDING the deploy tx each
+  // attempt — resubmitting the same balanced tx can never clear a 170. See
+  // ./resilient-submit.ts and ../DEPLOY_TO_PREPROD.md.
+  const counterContract = await withDustRetry(
+    'deploy',
+    () =>
+      contracts.deployContract(providers, {
+        compiledContract: counterCompiledContract,
+        privateStateId: 'counterPrivateState',
+        initialPrivateState: privateState,
+        args: [],
+      }),
+    logger,
+  );
   logger.info(`Deployed contract at address: ${counterContract.deployTxData.public.contractAddress}`);
   return counterContract as unknown as DeployedCounterContract;
 };
 
 export const increment = async (counterContract: DeployedCounterContract): Promise<types.FinalizedTxData> => {
   logger.info('Incrementing...');
-  const finalizedTxData = await counterContract.callTx.increment();
+  // Same rebuild-on-170 resilience for contract calls on public networks.
+  const finalizedTxData = await withDustRetry(
+    'increment',
+    () => counterContract.callTx.increment(),
+    logger,
+  );
 
   return finalizedTxData.public;
 };
