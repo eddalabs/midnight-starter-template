@@ -3,7 +3,7 @@
 ## Prerequisites
 
 - GitHub repository connected to Vercel
-- Midnight contract deployed and contract address available
+- Midnight contract deployed and contract address available (see [`counter-cli/DEPLOY_TO_PREPROD.md`](counter-cli/DEPLOY_TO_PREPROD.md) to deploy the contract on-chain to Preprod)
 - Vercel account with project created
 
 ## One-Time Setup in Vercel
