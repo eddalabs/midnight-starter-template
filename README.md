@@ -1,7 +1,7 @@
 # 🚀 EDDA - Midnight Starter Template
 This project is built on the Midnight Network.
 - A starter template for building on Midnight Network with React frontend and smart contract integration.
-- **[Live Demo → counter.nebula.builders](https://counter.nebula.builders)**
+- **Superseded by [modular-starter](https://github.com/eddalabs/modular-starter)**, the starter we now point people at: one modular Compact contract, a Node SDK, and tests that run real transactions against a dockerized network. Live at [template.preview.eddalabs.io](https://template.preview.eddalabs.io). This repository stays up for anyone arriving from an older link.
 
 ## 📦 Prerequisites
 
