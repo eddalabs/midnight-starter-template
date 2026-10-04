@@ -36,6 +36,9 @@ declare global {
   }
 }
 
+/** An injected wallet plus the `window.midnight` key it was found under. */
+export type AvailableWallet = InitialAPI & { key: string };
+
 export class MidnightBrowserWallet {
   private constructor(
     public initialAPI: InitialAPI | undefined,
@@ -52,11 +55,11 @@ export class MidnightBrowserWallet {
     public logger?: Logger
   ) {}
 
-  static getAvailableWallets(): InitialAPI[] {
+  static getAvailableWallets(): AvailableWallet[] {
     if (window === undefined) return [];
     if (window.midnight === undefined) return [];
 
-    const wallets: InitialAPI[] = [];
+    const wallets: AvailableWallet[] = [];
     for (const key in window.midnight) {
       try {
         const _wallet = window.midnight[key];
@@ -64,6 +67,7 @@ export class MidnightBrowserWallet {
         if (_wallet.name === undefined) continue;
         if (_wallet.apiVersion === undefined) continue;
         wallets.push({
+          key,
           name: _wallet.name,
           apiVersion: _wallet.apiVersion,
           connect: _wallet.connect,
